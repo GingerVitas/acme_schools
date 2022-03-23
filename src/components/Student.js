@@ -17,6 +17,7 @@ class Student extends React.Component{
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGPAChange =this.handleGPAChange.bind(this);
   };
 
   handleChange(ev){
@@ -28,6 +29,19 @@ class Student extends React.Component{
   handleSubmit(ev){
     ev.preventDefault();
     this.props.updateStudent({...this.props.student, ...this.state})
+  };
+
+  handleGPAChange(ev){
+    if (ev.target.value.length > 4) {
+      const newGpa = parseFloat(ev.target.value).toFixed(2);
+      this.setState({
+        gpa: newGpa
+      })
+    } else {
+      this.setState({
+        gpa: ev.target.value
+      })
+    }
   };
 
   componentDidUpdate(prevProps){
@@ -45,7 +59,7 @@ class Student extends React.Component{
   render(){
     const {student, campus} = this.props;
     const {firstName, lastName, email, imageUrl, gpa} = this.state;
-    const {handleSubmit, handleChange} = this;
+    const {handleSubmit, handleGPAChange, handleChange} = this;
     if(!student || !campus) return null
     return(
       <div>
@@ -56,7 +70,7 @@ class Student extends React.Component{
           <input name='lastName' value={lastName} onChange={handleChange} />
           <input name='email' value={email} onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} onChange={handleChange} />
-          <input name='gpa' value={gpa} onChange={handleChange} />
+          <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
           <button type='submit'>Udpate</button>
         </form>
       </div>

@@ -17,12 +17,26 @@ class Student extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGPAChange = this.handleGPAChange.bind(this);
   }
 
   handleChange(ev) {
     this.setState({
       [ev.target.name]:ev.target.value
     })
+  };
+
+  handleGPAChange(ev){
+    if (ev.target.value.length > 4) {
+      const newGpa = parseFloat(ev.target.value).toFixed(2);
+      this.setState({
+        gpa: newGpa
+      })
+    } else {
+      this.setState({
+        gpa: ev.target.value
+      })
+    }
   };
 
   handleSubmit(ev){
@@ -34,9 +48,9 @@ class Student extends React.Component {
   
   render(){
     const {students, campuses} = this.props;
-    console.log('Campuses Test', campuses);
+    console.log('State Test', this.state);
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
-    const {handleChange, handleSubmit} = this;
+    const {handleChange, handleGPAChange, handleSubmit} = this;
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div>
@@ -46,7 +60,7 @@ class Student extends React.Component {
           <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} />
           <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
-          <input type='number' name='gpa' value={gpa ? gpa : ''} placeholder='Enter your GPA' onChange={handleChange} />
+          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' onChange={handleGPAChange} />
           <select name='campusId' value={campusId} onChange={handleChange}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {
@@ -62,7 +76,6 @@ class Student extends React.Component {
         <ul>
           {students.map(student => {
             const campus = campuses.find(campus => campus.id === student.campusId)
-            console.log('Map Campus Test', campus);
             return <li key={student.id}><NavLink to={`/students/${student.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div>
               {student.firstName} {student.lastName} -- {!campus ? 'Not Currently Enrolled' : `Attends ${campus.name}`}
