@@ -16,9 +16,9 @@ class App extends React.Component{
     console.log(this.props)
     return(
       <HashRouter>
-        <div>
+        <header>
           <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}><h1>ACME Campus Enrollments</h1></Link>
-        </div>
+        </header>
         <nav>
           <Route component={Nav}/>
         </nav>
