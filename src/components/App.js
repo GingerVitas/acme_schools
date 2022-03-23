@@ -4,6 +4,7 @@ import {loadStudents} from '../store/studentStore';
 import {loadCampuses} from '../store/campusStore';
 import {HashRouter, Route, Link} from 'react-router-dom';
 import Nav from './Nav';
+import Students from './Students';
 
 
 class App extends React.Component{
@@ -23,7 +24,7 @@ class App extends React.Component{
           <Route component={Nav}/>
         </nav>
         <div className='renderContainer'>
-          <h2>Put other routes here</h2>
+          <Route path='/students' component={Students} />
         </div>
       </HashRouter>
     )
