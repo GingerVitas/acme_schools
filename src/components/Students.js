@@ -10,7 +10,11 @@ const Student = ({students, campuses}) => {
       <ul>
         {students.map(student => {
           const campus = campuses.find(campus => campus.id === student.campusId)
-          return <li key={student.id}>{student.firstName} {student.lastName} - attends {campus.name}</li>
+          return <li key={student.id}>{student.firstName} {student.lastName} - attends {campus.name}
+          <div>
+            <img src={student.imageUrl} /><p>Email: {student.email} GPA: {student.gpa}</p>
+          </div>
+          </li>
         } 
         )}
       </ul>

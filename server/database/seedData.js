@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const campuses = [...Array(5)].map(campus => (
   {
     name: faker.company.companyName(),
-    imageUrl: faker.image.business(),
+    imageUrl: faker.image.image(),
     address: faker.fake(`{{address.streetAddress}} {{address.streetSuffix}}
     {{address.city}}, {{address.state}} {{address.zipCode}}`),
     description: faker.lorem.paragraphs(4)
