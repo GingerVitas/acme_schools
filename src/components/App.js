@@ -6,6 +6,7 @@ import {HashRouter, Route, Link} from 'react-router-dom';
 import Nav from './Nav';
 import Students from './Students';
 import Campuses from './Campuses';
+import Student from './Student';
 
 
 class App extends React.Component{
@@ -25,8 +26,9 @@ class App extends React.Component{
           <Route component={Nav}/>
         </nav>
         <div className='renderContainer'>
-          <Route path='/students' component={Students} />
-          <Route path='/campuses' component={Campuses} />
+          <Route exact path='/students' component={Students} />
+          <Route exact path='/campuses' component={Campuses} />
+          <Route exact path='/students/:id' component={Student} />
         </div>
       </HashRouter>
     )
