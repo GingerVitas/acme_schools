@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {db} = require('./index');
+const db = require('./db');
 
 const Student = db.define('student', {
   firstName: {
@@ -9,7 +9,7 @@ const Student = db.define('student', {
       notEmpty: true
     }
   },
-  lasName: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {

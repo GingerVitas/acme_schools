@@ -7,6 +7,9 @@ const app = express()
 app.use('/dist', express.static(path.join(__dirname, '../dist')))
 
 
+app.use('/api/students', require('./routes/students'));
+app.use('/api/campuses', require('./routes/campuses'));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
 }); 
