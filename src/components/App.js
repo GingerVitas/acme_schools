@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {loadStudents} from '../store/studentStore';
 import {loadCampuses} from '../store/campusStore';
 import {HashRouter, Route, Link} from 'react-router-dom';
+import Nav from './Nav';
 
 
 class App extends React.Component{
@@ -12,14 +13,14 @@ class App extends React.Component{
   }
 
   render(){
-
+    console.log(this.props)
     return(
       <HashRouter>
         <div>
           <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}><h1>ACME Campus Enrollments</h1></Link>
         </div>
         <nav>
-          <h2>Put Nav component here</h2>
+          <Route component={Nav}/>
         </nav>
         <div className='renderContainer'>
           <h2>Put other routes here</h2>
