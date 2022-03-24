@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {addStudent} from '../store/studentStore';
+import {addStudent, loadStudents} from '../store/studentStore';
 
 
 class Student extends React.Component {
@@ -18,6 +18,10 @@ class Student extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGPAChange = this.handleGPAChange.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.loadStudents();
   }
 
   handleChange(ev) {
@@ -48,7 +52,6 @@ class Student extends React.Component {
   
   render(){
     const {students, campuses} = this.props;
-    console.log('State Test', this.state);
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleChange, handleGPAChange, handleSubmit} = this;
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
@@ -97,7 +100,8 @@ class Student extends React.Component {
 
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
-    addStudent: (student) => dispatch(addStudent(student, history))
+    addStudent: (student) => dispatch(addStudent(student, history)),
+    loadStudents: () => dispatch(loadStudents())
   }
 }
 

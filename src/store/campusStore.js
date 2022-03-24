@@ -3,7 +3,7 @@ import axios from 'axios';
 const LOAD_CAMPUSES = 'LOAD_CAMPUSES';
 
 //Action Creators
-const _loadCampuses = (campuses) => {
+export const _loadCampuses = (campuses) => {
   return {
     type: LOAD_CAMPUSES,
     campuses

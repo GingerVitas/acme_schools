@@ -7,13 +7,13 @@ import {updateStudent} from '../store/studentStore';
 class Student extends React.Component{
   constructor(props) {
     super(props),
-    console.log('CONSTRUCTOR STUDENT TEST', this.props.student)
     this.state = {
       firstName: this.props.student ? this.props.student.firstName : '',
       lastName: this.props.student ? this.props.student.lastName : '',
       email: this.props.student ? this.props.student.email : '',
       imageUrl: this.props.student ? this.props.student.imageUrl : '',
       gpa: this.props.student ? this.props.student.gpa : '',
+      campusId: this.props.student ? this.props.student.campusId : '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,11 +24,13 @@ class Student extends React.Component{
     this.setState({
       [ev.target.name]:ev.target.value
     })
+    console.log('handleChange Test', this.state.campusId)
   };
 
   handleSubmit(ev){
     ev.preventDefault();
-    this.props.updateStudent({...this.props.student, ...this.state})
+    const student = {...this.props.student, ...this.state};
+    this.props.updateStudent(student)
   };
 
   handleGPAChange(ev){
@@ -51,14 +53,15 @@ class Student extends React.Component{
         lastName: this.props.student.lastName,
         email: this.props.student.email,
         imageUrl: this.props.student.imageUrl,
-        gpa: this.props.student.gpa
+        gpa: this.props.student.gpa,
+        campusId: this.props.student.campusId
       })
     }
   }
 
   render(){
-    const {student, campus} = this.props;
-    const {firstName, lastName, email, imageUrl, gpa} = this.state;
+    const {student, campus, campuses} = this.props;
+    const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleSubmit, handleGPAChange, handleChange} = this;
     if(!student || !campus) return null
     return(
@@ -71,7 +74,15 @@ class Student extends React.Component{
           <input name='email' value={email} onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} onChange={handleChange} />
           <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-          <button type='submit'>Udpate</button>
+          <select name='campusId' value={campusId} onChange={handleChange}>
+            <option value=''>-- Select a Campus --</option>
+            {campuses.map(campus => {
+              return (
+                <option value={campus.id} key={campus.id}>{campus.name}</option>
+              )
+            })}
+          </select>
+          <button type='submit'>Update</button>
         </form>
       </div>
 
@@ -84,7 +95,8 @@ const mapStateToProps = ({students, campuses}, {match}) => {
   const campus = campuses.find(campus => campus.id === student.campusId)
   return {
     student,
-    campus
+    campus,
+    campuses
   }
 };
 
