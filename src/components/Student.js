@@ -13,7 +13,7 @@ class Student extends React.Component{
       email: this.props.student ? this.props.student.email : '',
       imageUrl: this.props.student ? this.props.student.imageUrl : '',
       gpa: this.props.student ? this.props.student.gpa : '',
-      campusId: this.props.student ? this.props.student.campusId : '',
+      campusId: this.props.student ? this.props.student.campusId*1 : '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +55,7 @@ class Student extends React.Component{
         email: this.props.student.email,
         imageUrl: this.props.student.imageUrl,
         gpa: this.props.student.gpa,
-        campusId: this.props.student.campusId
+        campusId: this.props.student.campusId*1
       })
     }
   }
@@ -75,7 +75,7 @@ class Student extends React.Component{
           <input name='email' value={email} onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} onChange={handleChange} />
           <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId} onChange={handleChange}>
+          <select name='campusId' value={campusId} onChange={ev => this.setState({campusId:ev.target.value*1})}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {
               return (
@@ -94,10 +94,6 @@ class Student extends React.Component{
 const mapStateToProps = ({students, campuses}, {match}) => {
   const student = students.find(student => student.id === match.params.id*1)
   const campus = campuses.find(campus => campus.id === student.campusId)
-  console.log('MAP STATE TO PROPS STUDENT TEST', student);
-  console.log('MAP STATE TO PROPS CAMPUSES TEST', campuses);
-  console.log('MAP STATE TO PROPS CAMPUS TEST', campus);
-  
   return {
     student,
     campus,
