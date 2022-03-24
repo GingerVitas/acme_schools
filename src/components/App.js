@@ -11,9 +11,9 @@ import Campus from './Campus';
 
 
 class App extends React.Component{
-  componentDidMount(){
-    this.props.loadStudents();
-    this.props.loadCampuses();
+  async componentDidMount(){
+    await this.props.loadStudents();
+    await this.props.loadCampuses();
   }
 
   render(){
