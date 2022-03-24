@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const LOAD_CAMPUSES = 'LOAD_CAMPUSES';
+const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
 
 //Action Creators
 export const _loadCampuses = (campuses) => {

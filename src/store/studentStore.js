@@ -3,6 +3,7 @@ import axios from 'axios';
 const LOAD_STUDENTS = 'LOAD_STUDENTS';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
 const ADD_STUDENT = 'ADD_STUDENT';
+const DELETE_STUDENT = 'DELETE_STUDENT';
 
 //Action Creators
 const _loadStudents = (students) => {
@@ -26,6 +27,13 @@ const _addStudent = (student) => {
   }
 }
 
+const _deleteStudent = (student) => {
+  return {
+    type: DELETE_STUDENT,
+    student
+  }
+};
+
 //Thunks
 export const loadStudents = () => {
   return async(dispatch) => {
@@ -38,7 +46,7 @@ export const updateStudent = (student, history) => {
   return async(dispatch) => {
     const updatedStudent = (await axios.put(`/api/students/${student.id}`, student)).data;
     dispatch(_updateStudent(updatedStudent));
-    history.push('/students');
+    history.push(`/students/${student.id}`);
   }
 };
 
@@ -50,6 +58,15 @@ export const addStudent = (student, history) => {
   }
 };
 
+export const deleteStudent = (student, history) => {
+  return async(dispatch) => {
+    await axios.delete(`/api/students/${student.id}`);
+    dispatch(_deleteStudent(student));
+  }
+};
+
+
+//Reducer
 const studentReducer = (state =[], action) => {
   if(action.type === LOAD_STUDENTS){
     return action.students;
@@ -59,6 +76,9 @@ const studentReducer = (state =[], action) => {
   }
   if(action.type === ADD_STUDENT){
     return [...state, action.student]
+  }
+  if(action.type === DELETE_STUDENT){
+    return [...state.filter(student => student.id !== action.student.id)]
   }
   return state;
 }

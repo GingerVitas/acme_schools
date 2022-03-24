@@ -19,7 +19,7 @@ router.post('/', async(req, res, next) => {
   catch(ex){
     next(ex)
   }
-})
+});
 
 router.put('/:id', async(req, res, next) => {
   try{
@@ -29,6 +29,17 @@ router.put('/:id', async(req, res, next) => {
   catch(ex){
     next(ex)
   }
-})
+});
+
+router.delete('/:id', async(req, res, next) => {
+  try{
+    const student = await Student.findByPk(req.params.id);
+    await student.destroy();
+    res.sendStatus(204)
+  }
+  catch(ex){
+    next(ex)
+  }
+});
 
 module.exports = router;

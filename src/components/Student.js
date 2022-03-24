@@ -24,13 +24,12 @@ class Student extends React.Component{
     this.setState({
       [ev.target.name]:ev.target.value
     })
-    console.log('handleChange Test', this.state.campusId)
   };
 
   handleSubmit(ev){
     ev.preventDefault();
     const student = {...this.props.student, ...this.state};
-    this.props.updateStudent(student)
+    this.props.updateStudent(student);
   };
 
   handleGPAChange(ev){
@@ -45,6 +44,8 @@ class Student extends React.Component{
       })
     }
   };
+
+
 
   componentDidUpdate(prevProps){
     if(!prevProps.student && this.props.student){
@@ -93,6 +94,10 @@ class Student extends React.Component{
 const mapStateToProps = ({students, campuses}, {match}) => {
   const student = students.find(student => student.id === match.params.id*1)
   const campus = campuses.find(campus => campus.id === student.campusId)
+  console.log('MAP STATE TO PROPS STUDENT TEST', student);
+  console.log('MAP STATE TO PROPS CAMPUSES TEST', campuses);
+  console.log('MAP STATE TO PROPS CAMPUS TEST', campus);
+  
   return {
     student,
     campus,
