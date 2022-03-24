@@ -13,7 +13,7 @@ class Student extends React.Component{
       email: this.props.student ? this.props.student.email : '',
       imageUrl: this.props.student ? this.props.student.imageUrl : '',
       gpa: this.props.student ? this.props.student.gpa : '',
-      campusId: this.props.student ? this.props.student.campusId*1 : '',
+      campusId: this.props.student && this.props.student.campusID ? this.props.student.campusId*1 : '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,18 +64,18 @@ class Student extends React.Component{
     const {student, campus, campuses} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleSubmit, handleGPAChange, handleChange} = this;
-    if(!student || !campus) return null
+    if(!student) return null
     return(
       <div>
         <h2>Details for {student.firstName} {student.lastName}</h2>
-        <h3>Attends <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></h3>
+        {!campus ? <h3>Not Currently Enrolled</h3> : <h3>Attends <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></h3> }
         <form onSubmit={handleSubmit}>
           <input name='firstName' value={firstName} onChange={handleChange} />
           <input name='lastName' value={lastName} onChange={handleChange} />
           <input name='email' value={email} onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} onChange={handleChange} />
           <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId} onChange={ev => this.setState({campusId:ev.target.value*1})}>
+          <select name='campusId' value={campusId === null ? '' : campusId} onChange={ev => this.setState({campusId:ev.target.value*1})}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {
               return (

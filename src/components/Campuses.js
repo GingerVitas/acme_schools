@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {createCampus} from '../store/campusStore';
+import {createCampus, deleteCampus} from '../store/campusStore';
+import {updateMultiple} from '../store/studentStore';
 
 class Campuses extends React.Component {
   constructor(props){
@@ -14,11 +15,12 @@ class Campuses extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   
   handleSubmit(ev){
     ev.preventDefault();
-    this.props.createCampus({...this.state})
+    this.props.createCampus({...this.state});
   }
 
   handleChange(ev){
@@ -26,12 +28,19 @@ class Campuses extends React.Component {
       [ev.target.name]:ev.target.value
     })
   }
+
+  handleDelete(ev, campus, id) {
+    ev.preventDefault();
+    this.props.deleteCampus(campus);
+    console.log('HANDLE DELETE TEST',id)
+    this.props.updateMultiple(id)
+  }
   
 
   render() {
     const {students, campuses} = this.props
     const {name, imageUrl, address, description} = this.state
-    const {handleSubmit, handleChange} = this
+    const {handleSubmit, handleChange, handleDelete} = this
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
     <div>
@@ -49,12 +58,13 @@ class Campuses extends React.Component {
           {campuses.map(campus => {
             const enrolledStudents = students.filter(student => student.campusId === campus.id);
             return (
-            <Link to={`campuses/${campus.id}`} key={campus.id}><li>
-              {campus.name} ({enrolledStudents.length} Enrolled Students)
+            <li key={campus.id}>
+              <Link to={`campuses/${campus.id}`} >{campus.name} ({enrolledStudents.length} Enrolled Students) </Link>
               <div>
                 <img src={campus.imageUrl} />{campus.address}
               </div>
-            </li></Link>
+              <button onClick={(ev) => handleDelete(ev, campus, campus.id)}>Sell This Campus</button>
+            </li>
                     
             )
           })}
@@ -70,7 +80,9 @@ class Campuses extends React.Component {
 
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
-    createCampus: (campus) => dispatch(createCampus(campus, history))
+    createCampus: (campus) => dispatch(createCampus(campus, history)),
+    deleteCampus: (campus) => dispatch(deleteCampus(campus)),
+    updateMultiple: (id) => dispatch(updateMultiple(id))
   }
 }
 

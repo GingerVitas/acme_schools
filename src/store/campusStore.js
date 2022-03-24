@@ -3,6 +3,7 @@ import axios from 'axios';
 const LOAD_CAMPUSES = 'LOAD_CAMPUSES';
 const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
 const CREATE_CAMPUS = 'CREATE_CAMPUS';
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
 
 //Action Creators
 const _loadCampuses = (campuses) => {
@@ -25,6 +26,13 @@ const _createCampus = (campus) => {
     campus
   }
 };
+
+const  _deleteCampus = (campus) => {
+  return {
+    type: DELETE_CAMPUS,
+    campus
+  }
+}
 
 
 //Thunks
@@ -49,6 +57,13 @@ export const createCampus = (campus, history) => {
   }
 };
 
+export const deleteCampus = (campus) => {
+  return async(dispatch) => {
+    await axios.delete(`/api/campuses/${campus.id}`);
+    dispatch(_deleteCampus(campus));
+  }
+};
+
 
 //Reducer
 const campusReducer = (state = [],  action) => {
@@ -60,6 +75,9 @@ const campusReducer = (state = [],  action) => {
   }
   if(action.type === CREATE_CAMPUS){
     return [...state, action.campus]
+  }
+  if(action.type === DELETE_CAMPUS){
+    return [...state.filter(campus => campus.id !== action.campus.id)]
   }
   return state
 };

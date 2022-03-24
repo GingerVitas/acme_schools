@@ -31,6 +31,20 @@ router.put('/:id', async(req, res, next) => {
   }
 });
 
+router.put('/', async(req, res, next) => {
+  try{
+    await Student.update({campusId: ''}, {
+      where: {
+        campusId: req.body
+      }
+    });
+    res.sendStatus(200);
+  }
+  catch(ex){
+    next(ex)
+  }
+})
+
 router.delete('/:id', async(req, res, next) => {
   try{
     const student = await Student.findByPk(req.params.id);

@@ -57,13 +57,20 @@ export const addStudent = (student, history) => {
   }
 };
 
-export const deleteStudent = (student, history) => {
+export const deleteStudent = (student) => {
   return async(dispatch) => {
     await axios.delete(`/api/students/${student.id}`);
     dispatch(_deleteStudent(student));
   }
 };
 
+export const updateMultiple = (campusId) => {
+  return async(dispatch) => {
+    await axios.put('/api/students', campusId);
+    const students = (await axios.get('api/students')).data;
+    dispatch(_loadStudents(students));
+  }
+}
 
 //Reducer
 const studentReducer = (state =[], action) => {
