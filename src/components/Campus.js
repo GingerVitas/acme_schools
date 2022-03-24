@@ -9,11 +9,18 @@ class Campus extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      name: '',
-      imageUrl: '',
-      address: '',
-      description: '',
+      name: this.props.campus ? this.props.campus.name : '',
+      imageUrl: this.props.campus ? this.props.campus.imageUrl : '',
+      address: this.props.campus ? this.props.campus.address : '',
+      description: this.props.campus ? this.props.campus.description : '',
     }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(ev) {
+    ev.preventDefault();
+    this.props.updateCampus({...this.props.campus, ...this.state})
   }
 
   handleChange(ev) {
@@ -22,10 +29,22 @@ class Campus extends React.Component{
     })
   }
 
+  componentDidUpdate(prevProps){
+    if(!prevProps.campus && this.props.campus){
+      this.setState({
+        name: this.props.campus.name,
+        imageUrl: this.props.campus.imageUrl,
+        address: this.props.campus.address,
+        description: this.props.campus.description
+      })
+    }
+  };
+
 
   render(){
+    const {name, imageUrl, address, description} = this.state
     const {campus, enrolledStudents} = this.props
-    console.log(campus)
+    const {handleChange, handleSubmit} = this
     if(!campus.id) return <h1>Loading....</h1>
     return(
       <div>
@@ -44,6 +63,15 @@ class Campus extends React.Component{
               )
             })}
           </ul>
+        </div>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <input name='name' value={name} onChange={handleChange} placeholder='Name' />
+            <input name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an Image' />
+            <input name='address' value={address} onChange={handleChange} placeholder='Address' />
+            <textarea name='description' value={description} onChange={handleChange} placeholder='Description' />
+            <button type='submit'>Update Campus</button>
+          </form>
         </div>
       </div>
       

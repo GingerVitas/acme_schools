@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 
 
 const Nav = ({location: {pathname}, students, campuses}) => {
-  console.log(students)
   if(!students || !campuses) return <h3>Loading...</h3>
   return(
     <div>
