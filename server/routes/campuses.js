@@ -11,6 +11,14 @@ router.get('/', async(req, res, next) =>{
   }
 })
 
+router.get('/:id', async(req, res, next) => {
+  try{
+    res.send(await Campus.findByPk(req.params.id))
+  }
+  catch(ex){
+    next(ex)
+  }
+})
 
 
 module.exports = router;

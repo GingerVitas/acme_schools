@@ -63,7 +63,7 @@ class Student extends React.Component {
           <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} />
           <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
-          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' onChange={handleGPAChange} />
+          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
           <select name='campusId' value={campusId} onChange={handleChange}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {

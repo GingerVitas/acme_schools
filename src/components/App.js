@@ -7,6 +7,7 @@ import Nav from './Nav';
 import Students from './Students';
 import Campuses from './Campuses';
 import Student from './Student';
+import Campus from './Campus';
 
 
 class App extends React.Component{
@@ -28,6 +29,7 @@ class App extends React.Component{
           <Route exact path='/students' component={Students} />
           <Route exact path='/campuses' component={Campuses} />
           <Route exact path='/students/:id' component={Student} />
+          <Route exact path='/campuses/:id' component={Campus} />
         </div>
       </HashRouter>
     )
