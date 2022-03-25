@@ -95,7 +95,7 @@ const studentReducer = (state =[], action) => {
   if(action.type === DELETE_STUDENT){
     return [...state.filter(student => student.id !== action.student.id)]
   }
-  return state;
+  return [...state];
 }
 
 

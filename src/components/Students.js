@@ -60,9 +60,9 @@ class Student extends React.Component {
       <div>
         <div>
           <form onSubmit={handleSubmit}>
-          <input name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} />
-          <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} />
-          <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} />
+          <input name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+          <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+          <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
           <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
           <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
           <select name='campusId' value={campusId} onChange={handleChange}>
@@ -83,11 +83,11 @@ class Student extends React.Component {
             return <li key={student.id}><NavLink to={`/students/${student.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div>
               {student.firstName} {student.lastName} -- {!campus ? 'Not Currently Enrolled' : `Attends ${campus.name}`}
-              </div>
+              </div></NavLink>
             <div>
               <img src={student.imageUrl} /><p>Email: {student.email} GPA: {student.gpa}</p>
             </div>
-            </NavLink>
+            
             <button onClick={()=> deleteStudent(student)}>X</button>
             </li>
           } 

@@ -21,7 +21,6 @@ class Student extends React.Component{
   };
 
   async componentDidMount(){
-    console.log('*********componentdidMOUNT************')
     await this.props.loadStudents();
   }
 
@@ -53,7 +52,6 @@ class Student extends React.Component{
 
 
   componentDidUpdate(prevProps){
-    console.log('*********componentDidUPDATE**********')
     if(!prevProps.student && this.props.student){
       this.setState({
         firstName: this.props.student.firstName,
@@ -67,7 +65,6 @@ class Student extends React.Component{
   }
 
   render(){
-    console.log('********RENDER********')
     const {student, campus, campuses} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleSubmit, handleGPAChange, handleChange} = this;
@@ -99,7 +96,6 @@ class Student extends React.Component{
 };
 
 const mapStateToProps = ({students, campuses}, {match}) => {
-  console.log('********mapSTATEtoPROPS********')
   const student = students.find(student => student.id === match.params.id*1)
   const campus = campuses.find(campus => campus.id === student.campusId)
   return {
@@ -110,7 +106,6 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 };
 
 const mapDispatchToProps = (dispatch, {history}) => {
-  console.log('*********mapDISPATCHtoPROPS***********')
   return {
     updateStudent: (student) => dispatch(updateStudent(student, history)),
     loadStudents: () => dispatch(loadStudents())

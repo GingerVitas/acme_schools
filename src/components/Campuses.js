@@ -46,9 +46,9 @@ class Campuses extends React.Component {
     <div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input name='name' value={name} onChange={handleChange} placeholder='Campus Name' />
+          <input name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
           <input name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
-          <input name='address' value={address} onChange={handleChange} placeholder='Campus Address' />
+          <input name='address' value={address} onChange={handleChange} placeholder='Campus Address' required onInvalid={e => e.target.setCustomValidity('Please enter a valid address for the campus')}/>
           <textarea name='description' value={description} onChange={handleChange} placeholder='Describe the campus' />
           <button type='submit'>Register your new campus!</button>
         </form>

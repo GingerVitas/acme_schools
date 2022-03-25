@@ -12,10 +12,6 @@ import Campus from './Campus';
 
 class App extends React.Component{
   async componentDidMount(){
-    await this.loadData()
-  }
-
-async loadData(){
     await this.props.loadStudents();
     await this.props.loadCampuses();
   }

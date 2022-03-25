@@ -68,7 +68,7 @@ export const deleteCampus = (campus) => {
 //Reducer
 const campusReducer = (state = [],  action) => {
   if(action.type === LOAD_CAMPUSES){
-    state = [...action.campuses]
+    return action.campuses
   }
   if(action.type === UPDATE_CAMPUS){
     return [...state.map(campus => campus.id !== action.campus.id ? campus : action.campus)]
@@ -79,7 +79,7 @@ const campusReducer = (state = [],  action) => {
   if(action.type === DELETE_CAMPUS){
     return [...state.filter(campus => campus.id !== action.campus.id)]
   }
-  return state
+  return [...state]
 };
 
 

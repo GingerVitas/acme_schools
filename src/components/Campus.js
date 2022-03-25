@@ -18,7 +18,6 @@ class Campus extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   async componentDidMount(){
-    console.log('*********componentdidMOUNT************')
     await this.props.loadCampuses();
   }
 
@@ -34,7 +33,6 @@ class Campus extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    console.log('*********componentDidUPDATE**********')
     if(!prevProps.campus && this.props.campus){
       this.setState({
         name: this.props.campus.name,
@@ -47,7 +45,6 @@ class Campus extends React.Component{
 
 
   render(){
-    console.log('********RENDER********')
     const {name, imageUrl, address, description} = this.state
     const {campus, enrolledStudents} = this.props
     const {handleChange, handleSubmit} = this
@@ -87,9 +84,7 @@ class Campus extends React.Component{
 }
 
 const mapStateToProps = ({students, campuses}, {match}) => {
-  console.log('******STATE TEST 1*****',campuses)
   const campus = campuses.find(campus => campus.id === match.params.id*1);
-  console.log('*********STATE TEST 2*******', campus)
   const enrolledStudents = students.filter(student => student.campusId === campus.id);
   return {
     campus,
@@ -98,7 +93,6 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 }
 
 const mapDispatchToProps = (dispatch, {history}) => {
-  console.log('*********mapDISPATCHtoPROPS***********')
   return {
     loadCampuses: () => dispatch(loadCampuses()),
     updateCampus: (campus) => dispatch(updateCampus(campus)),
