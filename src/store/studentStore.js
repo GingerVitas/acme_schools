@@ -64,9 +64,9 @@ export const deleteStudent = (student) => {
   }
 };
 
-export const updateMultiple = (campusId) => {
+export const updateMultiple = (campus) => {
   return async(dispatch) => {
-    await axios.put('/api/students', campusId);
+    await axios.put('/api/students', campus);
     const students = (await axios.get('api/students')).data;
     dispatch(_loadStudents(students));
   }

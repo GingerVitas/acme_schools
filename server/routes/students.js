@@ -33,12 +33,12 @@ router.put('/:id', async(req, res, next) => {
 
 router.put('/', async(req, res, next) => {
   try{
-    await Student.update({campusId: ''}, {
+    console.log(req.body)
+    res.status(200).send(await Student.update({campusId: null}, {
       where: {
-        campusId: req.body
+        campusId: req.body.id
       }
-    });
-    res.sendStatus(200);
+    }));
   }
   catch(ex){
     next(ex)

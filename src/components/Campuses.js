@@ -29,11 +29,11 @@ class Campuses extends React.Component {
     })
   }
 
-  handleDelete(ev, campus, id) {
+  async handleDelete(ev, campus) {
     ev.preventDefault();
-    this.props.deleteCampus(campus);
-    console.log('HANDLE DELETE TEST',id)
-    this.props.updateMultiple(id)
+    console.log('HANDLE DELETE TEST',campus)
+    await this.props.updateMultiple(campus)
+    await this.props.deleteCampus(campus);
   }
   
 
@@ -63,7 +63,7 @@ class Campuses extends React.Component {
               <div>
                 <img src={campus.imageUrl} />{campus.address}
               </div>
-              <button onClick={(ev) => handleDelete(ev, campus, campus.id)}>Sell This Campus</button>
+              <button onClick={(ev) => handleDelete(ev, campus)}>Sell This Campus</button>
             </li>
                     
             )
