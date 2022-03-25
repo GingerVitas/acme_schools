@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {expelStudent} from '../store/studentStore';
-import {updateCampus} from '../store/campusStore';
+import {updateCampus, loadCampuses} from '../store/campusStore';
 
 
 class Campus extends React.Component{
@@ -17,6 +17,10 @@ class Campus extends React.Component{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  async componentDidMount(){
+    console.log('*********componentdidMOUNT************')
+    await this.props.loadCampuses();
+  }
 
   handleSubmit(ev) {
     ev.preventDefault();
@@ -30,6 +34,7 @@ class Campus extends React.Component{
   }
 
   componentDidUpdate(prevProps){
+    console.log('*********componentDidUPDATE**********')
     if(!prevProps.campus && this.props.campus){
       this.setState({
         name: this.props.campus.name,
@@ -42,10 +47,11 @@ class Campus extends React.Component{
 
 
   render(){
+    console.log('********RENDER********')
     const {name, imageUrl, address, description} = this.state
     const {campus, enrolledStudents} = this.props
     const {handleChange, handleSubmit} = this
-    if(!campus.id) return <h1>Loading....</h1>
+    if(!campus) return <h2>Loading....</h2>
     return(
       <div>
         <div>
@@ -81,7 +87,9 @@ class Campus extends React.Component{
 }
 
 const mapStateToProps = ({students, campuses}, {match}) => {
+  console.log('******STATE TEST 1*****',campuses)
   const campus = campuses.find(campus => campus.id === match.params.id*1);
+  console.log('*********STATE TEST 2*******', campus)
   const enrolledStudents = students.filter(student => student.campusId === campus.id);
   return {
     campus,
@@ -90,7 +98,9 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 }
 
 const mapDispatchToProps = (dispatch, {history}) => {
+  console.log('*********mapDISPATCHtoPROPS***********')
   return {
+    loadCampuses: () => dispatch(loadCampuses()),
     updateCampus: (campus) => dispatch(updateCampus(campus)),
     updateStudent: (student) => dispatch(updateStudent(student, history)),
     expelStudent: (student) => dispatch(expelStudent(student))

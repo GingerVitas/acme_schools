@@ -39,6 +39,16 @@ router.delete('/:id', async(req, res, next) => {
   catch(ex){
     next(ex)
   }
+});
+
+router.put('/:id', async(req, res, next) => {
+  try{
+    const updatedCampus = await Campus.findByPk(req.params.id);
+    res.send(await updatedCampus.update(req.body))
+  }
+  catch(ex){
+    next(ex)
+  }
 })
 
 

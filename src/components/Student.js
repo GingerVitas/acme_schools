@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {updateStudent} from '../store/studentStore';
+import {updateStudent, loadStudents} from '../store/studentStore';
 
 
 class Student extends React.Component{
@@ -19,6 +19,11 @@ class Student extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGPAChange =this.handleGPAChange.bind(this);
   };
+
+  async componentDidMount(){
+    console.log('*********componentdidMOUNT************')
+    await this.props.loadStudents();
+  }
 
   handleChange(ev){
     this.setState({
@@ -48,6 +53,7 @@ class Student extends React.Component{
 
 
   componentDidUpdate(prevProps){
+    console.log('*********componentDidUPDATE**********')
     if(!prevProps.student && this.props.student){
       this.setState({
         firstName: this.props.student.firstName,
@@ -61,10 +67,11 @@ class Student extends React.Component{
   }
 
   render(){
+    console.log('********RENDER********')
     const {student, campus, campuses} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleSubmit, handleGPAChange, handleChange} = this;
-    if(!student) return null
+    if(!student) return <h2>Loading....</h2>
     return(
       <div>
         <h2>Details for {student.firstName} {student.lastName}</h2>
@@ -92,6 +99,7 @@ class Student extends React.Component{
 };
 
 const mapStateToProps = ({students, campuses}, {match}) => {
+  console.log('********mapSTATEtoPROPS********')
   const student = students.find(student => student.id === match.params.id*1)
   const campus = campuses.find(campus => campus.id === student.campusId)
   return {
@@ -102,8 +110,10 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 };
 
 const mapDispatchToProps = (dispatch, {history}) => {
+  console.log('*********mapDISPATCHtoPROPS***********')
   return {
-    updateStudent: (student) => dispatch(updateStudent(student, history))
+    updateStudent: (student) => dispatch(updateStudent(student, history)),
+    loadStudents: () => dispatch(loadStudents())
   }
 };
 
