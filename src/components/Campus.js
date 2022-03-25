@@ -46,8 +46,16 @@ class Campus extends React.Component{
 
   render(){
     const {name, imageUrl, address, description} = this.state
-    const {campus, enrolledStudents} = this.props
+    const {campus, campuses, students} = this.props
+    const enrolledStudents = campus ? students.filter(student => student.campusId === campus.id) : null;
+    const campusIds = campuses.map(campus => campus.id)
     const {handleChange, handleSubmit} = this
+    if(!campusIds.includes(this.props.match.params.id*1)) return (
+      <div>
+        <h2>Oops! It looks like we don't manage that campus yet.</h2>
+        <h2>Click <Link to='/campuses'>here</Link> to go back to the campus list.</h2>
+      </div> 
+    ) 
     if(!campus) return <h2>Loading....</h2>
     return(
       <div>
@@ -85,10 +93,10 @@ class Campus extends React.Component{
 
 const mapStateToProps = ({students, campuses}, {match}) => {
   const campus = campuses.find(campus => campus.id === match.params.id*1);
-  const enrolledStudents = students.filter(student => student.campusId === campus.id);
   return {
     campus,
-    enrolledStudents
+    campuses,
+    students
   }
 }
 

@@ -45,8 +45,6 @@ class App extends React.Component{
 
 
 
-
-
 const mapDispatchToProps = (dispatch) => {
   return {
     loadStudents: () => dispatch(loadStudents()),
@@ -56,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
 
 
 
-export default connect(state=>state, mapDispatchToProps)(App)
+export default connect(state => state, mapDispatchToProps)(App)

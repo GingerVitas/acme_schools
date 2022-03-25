@@ -20,9 +20,9 @@ class Student extends React.Component{
     this.handleGPAChange =this.handleGPAChange.bind(this);
   };
 
-  async componentDidMount(){
-    await this.props.loadStudents();
-  }
+  // async componentDidMount(){
+  //   await this.props.loadStudents();
+  // }
 
   handleChange(ev){
     this.setState({
@@ -65,10 +65,21 @@ class Student extends React.Component{
   }
 
   render(){
-    const {student, campus, campuses} = this.props;
+    const {student, campuses, students} = this.props;
+    const studentIds = students.map(student => student.id)
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleSubmit, handleGPAChange, handleChange} = this;
-    if(!student) return <h2>Loading....</h2>
+    const campus = student ? campuses.find(campus => campus.id === student.campusId) : null
+    if(!studentIds.includes(this.props.match.params.id*1)) return (
+      <div>
+        <h2>Oops! It looks like that student doesn't exist in our database.</h2>
+        <h2>Click <Link to='/students'>here</Link> to go back to the student list.</h2>
+      </div> 
+    ) 
+    if(!student) return (
+    
+    <h2>Loading....</h2>
+    )
     return(
       <div>
         <h2>Details for {student.firstName} {student.lastName}</h2>
@@ -97,11 +108,10 @@ class Student extends React.Component{
 
 const mapStateToProps = ({students, campuses}, {match}) => {
   const student = students.find(student => student.id === match.params.id*1)
-  const campus = campuses.find(campus => campus.id === student.campusId)
   return {
     student,
-    campus,
-    campuses
+    campuses,
+    students
   }
 };
 

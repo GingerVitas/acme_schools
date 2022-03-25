@@ -54,7 +54,6 @@ class Student extends React.Component {
     const {students, campuses, deleteStudent} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleChange, handleGPAChange, handleSubmit} = this;
-    console.log(students)
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div>
