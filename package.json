@@ -10,10 +10,10 @@
     "build:dev": "npm run build -- --watch --mode=development"
   },
   "dependencies": {
+    "@faker-js/faker": "^6.0.0",
     "express": "^4.17.1",
     "pg": "^8.6.0",
-    "sequelize": "^6.6.4",
-    "@faker-js/faker": "^6.0.0"
+    "sequelize": "^6.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
