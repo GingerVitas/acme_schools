@@ -72,6 +72,15 @@ export const updateMultiple = (campus) => {
   }
 }
 
+export const expelStudent = (student, history) => {
+  return async(dispatch) => {
+    const body = {campusId: null}
+    const updatedStudent = (await axios.put(`/api/students/${student.id}`, body)).data
+    dispatch(_updateStudent(updatedStudent));
+    //history.push(`/students/${updatedStudent.id}`);
+  }
+};
+
 //Reducer
 const studentReducer = (state =[], action) => {
   if(action.type === LOAD_STUDENTS){

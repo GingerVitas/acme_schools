@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {updateStudent} from '../store/studentStore';
+import {expelStudent} from '../store/studentStore';
 import {updateCampus} from '../store/campusStore';
 
 
@@ -59,7 +59,8 @@ class Campus extends React.Component{
           <ul>
             {enrolledStudents.map(student => {
               return (
-                <Link to={`/students/${student.id}`} key={student.id}><li>{student.firstName} {student.lastName}</li></Link>
+                <li key={student.id}><Link to={`/students/${student.id}`} >{student.firstName} {student.lastName}</Link> <button onClick={()=>this.props.expelStudent(student)}>Expel this student</button></li>
+                
               )
             })}
           </ul>
@@ -91,7 +92,8 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
     updateCampus: (campus) => dispatch(updateCampus(campus)),
-    updateStudent: (student) => dispatch(updateStudent(student, history))
+    updateStudent: (student) => dispatch(updateStudent(student, history)),
+    expelStudent: (student) => dispatch(expelStudent(student))
   }
 }
 
