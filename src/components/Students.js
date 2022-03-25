@@ -79,11 +79,11 @@ class Student extends React.Component {
         <ul>
           {students.map(student => {
             const campus = campuses.find(campus => campus.id === student.campusId)
-            return <li key={student.id}><NavLink to={`/students/${student.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            return <li key={student.id}>
               <div>
-              {student.firstName} {student.lastName} -- {!campus ? 'Not Currently Enrolled' : `Attends ${campus.name}`}
-              </div></NavLink>
+              <NavLink to={`/students/${student.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>{student.firstName} {student.lastName} -- {!campus ? 'Not Currently Enrolled' : `Attends ${campus.name}`}</NavLink>
             <div>
+              </div>
               <img src={student.imageUrl} /><p>Email: {student.email} GPA: {student.gpa}</p>
             </div>
             
