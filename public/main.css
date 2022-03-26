@@ -40,6 +40,37 @@ header {
   justify-content: center;
 }
 
+.studentSort {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.dropContent {
+  display: none;
+  position: absolulte;
+  background-color: #f1f1f1;
+  max-width: fit-content;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropContent button {
+  color: #f0f7ee;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropContent button:hover {
+  background-color: #ca3c25;
+}
+
+.studentSort:hover .dropContent {
+  display: block;
+}
+
 .createStudentFormContainer {
   width: 35%;
   height: 80vh;

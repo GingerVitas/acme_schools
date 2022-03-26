@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addStudent, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending } from '../store/studentStore';
+import {addStudent, loadStudents, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending, sortStudentsDefault, filterUnenrolledStudents } from '../store/studentStore';
 import StudentCard from './StudentCard';
 
 
@@ -18,6 +18,11 @@ class Student extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGPAChange = this.handleGPAChange.bind(this);
+    this.filterUnenrolledStudents = this.filterUnenrolledStudents.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.loadStudents();
   }
 
   handleChange(ev) {
@@ -45,20 +50,43 @@ class Student extends React.Component {
     this.props.addStudent(newStudent)
   }
   
+  filterUnenrolledStudents(){
+    const {students} = this.props
+    if (!students.filter(student => student.campusId === null).length) {
+      return (this.props.loadStudents()).then(alert('All students are registered!'))
+        
+    }
+    else {
+      return this.props.filterUnenrolledStudents();
+    }
+  }
   
   render(){
-    const {students, campuses, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending} = this.props;
+    const {students, campuses, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending, sortStudentsDefault, loadStudents} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
-    const {handleChange, handleGPAChange, handleSubmit} = this;
+    const {handleChange, handleGPAChange, handleSubmit, filterUnenrolledStudents} = this;
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div className='studentsContainer'>
         <div className='studentsListContainer'>
           <div className='studentSort'>
-            <button onClick={() => sortStudentsAscending()}>Sort by Last Name (ascending)</button>
-            <button onClick={() => sortStudentsDescending()}>Sort by Last Name (descending)</button>
-            <button onClick={() => sortStudentsGpaAscending()}>Sort by GPA (ascending)</button>
-            <button onClick={() => sortStudentsGpaDescending()}>Sort by GPA (descending)</button>
+            <ul>
+              <li><button className='dropButton'>Sort</button></li>
+            </ul>
+           
+            <div className='dropContent'>
+              <button onClick={() => sortStudentsDefault()}>Sort by Default</button>
+              <button onClick={() => sortStudentsAscending()}>Sort by Last Name (ascending)</button>
+              <button onClick={() => sortStudentsDescending()}>Sort by Last Name (descending)</button>
+              <button onClick={() => sortStudentsGpaAscending()}>Sort by GPA (ascending)</button>
+              <button onClick={() => sortStudentsGpaDescending()}>Sort by GPA (descending)</button>
+            </div>
+            <button className='dropButton'>Filter</button>
+            <div className='dropContent'>
+              <button onClick={() => sortStudentsGpaDescending()}>Sort by GPA (descending)</button>
+              <button onClick={() => filterUnenrolledStudents()}>See Unenrolled Students</button>
+              <button onClick={() => loadStudents()}>View All Students</button>
+            </div>
           </div>
           <table>
             <tbody>
@@ -93,11 +121,13 @@ class Student extends React.Component {
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
     addStudent: (student) => dispatch(addStudent(student, history)),
-    deleteStudent: (student) => dispatch(deleteStudent(student)),
+    loadStudents: () => dispatch(loadStudents()),
+    sortStudentsDefault: () => dispatch(sortStudentsDefault()),
     sortStudentsAscending: () => dispatch(sortStudentsAscending()),
     sortStudentsDescending: () => dispatch(sortStudentsDescending()),
     sortStudentsGpaAscending: ()=> dispatch(sortStudentsGpaAscending()),
-    sortStudentsGpaDescending: ()=> dispatch(sortStudentsGpaDescending())
+    sortStudentsGpaDescending: ()=> dispatch(sortStudentsGpaDescending()),
+    filterUnenrolledStudents: () => dispatch(filterUnenrolledStudents())
   }
 }
 

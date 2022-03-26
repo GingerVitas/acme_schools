@@ -4,7 +4,6 @@ const LOAD_STUDENTS = 'LOAD_STUDENTS';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
 const ADD_STUDENT = 'ADD_STUDENT';
 const DELETE_STUDENT = 'DELETE_STUDENT';
-const SORT_STUDENTS = 'SORT_STUDENTS'
 
 //Action Creators
 const _loadStudents = (students) => {
@@ -34,13 +33,6 @@ const _deleteStudent = (student) => {
     student
   }
 };
-
-const _sortStudents = (students) => {
-  return {
-    type: SORT_STUDENTS,
-    students
-  }
-}
 
 //Thunks
 export const loadStudents = () => {
@@ -85,7 +77,22 @@ export const expelStudent = (student, history) => {
     const body = {campusId: null}
     const updatedStudent = (await axios.put(`/api/students/${student.id}`, body)).data
     dispatch(_updateStudent(updatedStudent));
-    //history.push(`/students/${updatedStudent.id}`);
+  }
+};
+
+export const sortStudentsDefault = () => {
+  return async(dispatch) => {
+    const students = (await axios.get('/api/students')).data;
+    const sortedStudents = students.sort((a, b) => {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    });
+    dispatch(_loadStudents(sortedStudents));
   }
 };
 
@@ -103,9 +110,9 @@ export const sortStudentsAscending = () => {
       }
       return 0;
     });
-    dispatch(_sortStudents(sortedStudents));
+    dispatch(_loadStudents(sortedStudents));
   }
-}
+};
 
 export const sortStudentsDescending = () => {
   return async(dispatch) => {
@@ -121,9 +128,9 @@ export const sortStudentsDescending = () => {
       }
       return 0;
     });
-    dispatch(_sortStudents(sortedStudents));
+    dispatch(_loadStudents(sortedStudents));
   }
-}
+};
 
 export const sortStudentsGpaDescending = () => {
   return async(dispatch) => {
@@ -139,9 +146,9 @@ export const sortStudentsGpaDescending = () => {
       }
       return 0;
     });
-    dispatch(_sortStudents(sortedStudents));
+    dispatch(_loadStudents(sortedStudents));
   }
-}
+};
 
 export const sortStudentsGpaAscending = () => {
   return async(dispatch) => {
@@ -157,9 +164,25 @@ export const sortStudentsGpaAscending = () => {
       }
       return 0;
     });
-    dispatch(_sortStudents(sortedStudents));
+    dispatch(_loadStudents(sortedStudents));
   }
-}
+};
+
+export const filterUnenrolledStudents = () => {
+  return async(dispatch) => {
+    const students = (await axios.get('/api/students')).data;
+    const filteredStudents = students.filter(student => student.campusId === null);
+    dispatch(_loadStudents(filteredStudents))
+  }
+};
+
+export const filterCampusStudents = (id) => {
+  return async(dispatch) => {
+    const students = (await axios.get('/api/students')).data;
+    const filteredStudents = students.filter(student => student.campusId === id);
+    dispatch(_loadStudents(filteredStudents))
+  }
+};
 
 //Reducer
 const studentReducer = (state =[], action) => {
@@ -174,9 +197,6 @@ const studentReducer = (state =[], action) => {
   }
   if(action.type === DELETE_STUDENT){
     return [...state.filter(student => student.id !== action.student.id)]
-  }
-  if(action.type === SORT_STUDENTS){
-    return action.students
   }
   return [...state];
 }

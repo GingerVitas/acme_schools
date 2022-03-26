@@ -31,7 +31,6 @@ class Campuses extends React.Component {
 
   async handleDelete(ev, campus) {
     ev.preventDefault();
-    console.log('HANDLE DELETE TEST',campus)
     await this.props.updateMultiple(campus)
     await this.props.deleteCampus(campus);
   }
