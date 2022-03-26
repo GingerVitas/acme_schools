@@ -10,7 +10,7 @@ class NotFound extends React.Component {
   componentDidMount(){
     const {history} = this.props
     this.redirectTimeout = setTimeout(() => {
-      history.push('/') }, 7000)
+      history.push('/') }, 4000)
     }
 
 

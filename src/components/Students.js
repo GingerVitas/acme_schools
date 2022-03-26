@@ -20,10 +20,6 @@ class Student extends React.Component {
     this.handleGPAChange = this.handleGPAChange.bind(this);
   }
 
-  componentDidMount(){
-    this.props.loadStudents();
-  }
-
   handleChange(ev) {
     this.setState({
       [ev.target.name]:ev.target.value
@@ -56,26 +52,8 @@ class Student extends React.Component {
     const {handleChange, handleGPAChange, handleSubmit} = this;
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
-      <div>
-        <div>
-          <form onSubmit={handleSubmit}>
-          <input name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
-          <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
-          <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
-          <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
-          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId} onChange={handleChange}>
-            <option value=''>-- Select a Campus --</option>
-            {campuses.map(campus => {
-              return (
-                <option value={campus.id} key={campus.id}>{campus.name}</option>
-              )
-            })}
-          </select>
-          <button type='submit'>Enroll!</button>
-          </form>
-        </div>
-        <div>
+      <div className='studentsContainer'>
+        <div className='studentsListContainer'>
         <ul>
           {students.map(student => {
             const campus = campuses.find(campus => campus.id === student.campusId)
@@ -92,6 +70,24 @@ class Student extends React.Component {
           } 
         )}
         </ul>
+        </div>
+        <div className='createStudentFormContainer'>
+          <form onSubmit={handleSubmit}>
+          <input name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+          <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+          <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
+          <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
+          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
+          <select name='campusId' value={campusId} onChange={handleChange}>
+            <option value=''>-- Select a Campus --</option>
+            {campuses.map(campus => {
+              return (
+                <option value={campus.id} key={campus.id}>{campus.name}</option>
+              )
+            })}
+          </select>
+          <button type='submit'>Enroll!</button>
+          </form>
         </div>
       </div>
     )
