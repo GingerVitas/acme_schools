@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink} from 'react-router-dom';
-import {addStudent, loadStudents, deleteStudent } from '../store/studentStore';
+import {addStudent, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending } from '../store/studentStore';
+import StudentCard from './StudentCard';
 
 
 class Student extends React.Component {
@@ -47,29 +47,24 @@ class Student extends React.Component {
   
   
   render(){
-    const {students, campuses, deleteStudent} = this.props;
+    const {students, campuses, sortStudentsAscending, sortStudentsDescending, sortStudentsGpaAscending, sortStudentsGpaDescending} = this.props;
     const {firstName, lastName, email, imageUrl, gpa, campusId} = this.state;
     const {handleChange, handleGPAChange, handleSubmit} = this;
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div className='studentsContainer'>
         <div className='studentsListContainer'>
-        <ul>
-          {students.map(student => {
-            const campus = campuses.find(campus => campus.id === student.campusId)
-            return <li key={student.id}>
-              <div>
-              <NavLink to={`/students/${student.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>{student.firstName} {student.lastName} -- {!campus ? 'Not Currently Enrolled' : `Attends ${campus.name}`}</NavLink>
-            <div>
-              </div>
-              <img src={student.imageUrl} /><p>Email: {student.email} GPA: {student.gpa}</p>
-            </div>
-            
-            <button onClick={()=> deleteStudent(student)}>X</button>
-            </li>
-          } 
-        )}
-        </ul>
+          <div className='studentSort'>
+            <button onClick={() => sortStudentsAscending()}>Sort by Last Name (ascending)</button>
+            <button onClick={() => sortStudentsDescending()}>Sort by Last Name (descending)</button>
+            <button onClick={() => sortStudentsGpaAscending()}>Sort by GPA (ascending)</button>
+            <button onClick={() => sortStudentsGpaDescending()}>Sort by GPA (descending)</button>
+          </div>
+          <table>
+            <tbody>
+              <StudentCard />
+            </tbody>
+          </table>
         </div>
         <div className='createStudentFormContainer'>
           <form onSubmit={handleSubmit}>
@@ -98,8 +93,11 @@ class Student extends React.Component {
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
     addStudent: (student) => dispatch(addStudent(student, history)),
-    loadStudents: () => dispatch(loadStudents()),
-    deleteStudent: (student) => dispatch(deleteStudent(student))
+    deleteStudent: (student) => dispatch(deleteStudent(student)),
+    sortStudentsAscending: () => dispatch(sortStudentsAscending()),
+    sortStudentsDescending: () => dispatch(sortStudentsDescending()),
+    sortStudentsGpaAscending: ()=> dispatch(sortStudentsGpaAscending()),
+    sortStudentsGpaDescending: ()=> dispatch(sortStudentsGpaDescending())
   }
 }
 

@@ -9,8 +9,8 @@ const Nav = ({location: {pathname}, students, campuses}) => {
     <div>
       <div id='navContainer'>
         <ul className='nav'>
-          <li><Link to='/students' className={pathname === '/students' ? 'selected' : ''} style={{ textDecoration: 'none'}}>Students({students.length})</Link></li>
-          <li><Link to='/campuses' className={pathname === '/campuses' ? 'selected' : ''} style={{ textDecoration: 'none'}}>Campuses({campuses.length})</Link></li>
+          <li><Link to='/students' className={pathname === '/students' ? 'selected' : ''} style={{ textDecoration: 'none', color: 'inherit'}}>Students({students.length})</Link></li>
+          <li><Link to='/campuses' className={pathname === '/campuses' ? 'selected' : ''} style={{ textDecoration: 'none', color: 'inherit'}}>Campuses({campuses.length})</Link></li>
         </ul>
       </div>
     </div>

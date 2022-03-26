@@ -23,10 +23,10 @@ class App extends React.Component{
       <HashRouter>
         <header>
           <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}><h1>ACME Campus Enrollments</h1></Link>
+          <nav>
+            <Route component={Nav}/>
+          </nav>
         </header>
-        <nav>
-          <Route component={Nav}/>
-        </nav>
         <div className='renderContainer'>
           <Switch>
             <Route exact path='/' component={Home} />
