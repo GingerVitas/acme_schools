@@ -16,7 +16,7 @@ class Campuses extends React.Component {
     }
     this.sortHandler = this.sortHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
-    this.paginate = this.paginate.bind(this);
+    this.setCurrentPage = this.setCurrentPage.bind(this);
   }
 
   sortHandler(str) {
@@ -25,14 +25,14 @@ class Campuses extends React.Component {
   filterHandler(str) {
     this.setState({filterView: str})
   }
-  paginate(page) {
+  setCurrentPage(page) {
     this.setState({currentPage: page});
   } 
 
   render() {
     const {students, campuses} = this.props
     const {sortView, filterView, currentPage, campusesPerPage} = this.state;
-    const {sortHandler, filterHandler, paginate} = this
+    const {sortHandler, filterHandler, setCurrentPage} = this
 
     const indexOfLastCampus = currentPage * campusesPerPage;
     const indexOfFirstCampus = indexOfLastCampus - campusesPerPage;
@@ -91,7 +91,7 @@ class Campuses extends React.Component {
           </table>
         </div>
         <div>
-          <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} paginate={paginate}/>
+          <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
         </div>
       </div>
       <div className='addCampusFormContainer'>
