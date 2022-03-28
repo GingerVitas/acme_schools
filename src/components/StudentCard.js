@@ -11,16 +11,10 @@ class StudentCard extends React.Component {
   }
 
 deleteFunction(student){
-    const {students} = this.props
     this.props.deleteStudent(student).then(() => {
-      if (students[0].id === student.id) {
-        return(
-          this.props.loadStudents().then(alert('All filtered students removed from database!'))
-        )
-      } else {
         return alert('Student removed from database!')
       }
-    })
+    )
   }
 
   render(){
@@ -52,6 +46,7 @@ deleteFunction(student){
 }
 const mapDispatchToProps = (dispatch) => {
   return {
+    loadStudents: () => dispatch(loadStudents()),
     deleteStudent: (student) => dispatch(deleteStudent(student))
   }
 };
