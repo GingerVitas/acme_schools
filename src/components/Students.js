@@ -4,6 +4,7 @@ import {addStudent, loadStudents} from '../store/studentStore';
 import StudentCard from './StudentCard';
 import CreateStudentForm from './CreateStudentForm';
 import Pagination from './Pagination';
+import StudentNav from './StudentNav';
 
 
 class Students extends React.Component {
@@ -97,41 +98,13 @@ class Students extends React.Component {
         if (filterView === campus.name) return modifiedStudents.filter(student => student.campusId === campus.id)}).flat().filter(item => !!item)
 
     const currentStudents = modifiedStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+    
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div className='studentsContainer'>
         <div className='studentsListContainer'>
           <div className='studentsNav'>
-           <ul>
-            <li>
-              Sort
-              <ul>
-                <li className='link'><button onClick={()=> sortHandler('')}>Default Order</button></li>
-                <li><button onClick={()=>sortHandler('lastNameAscending')}>Last Name Ascending</button></li>
-                <li><button onClick={()=>sortHandler('lastNameDescending')}>Last Name Descending</button></li>
-                <li><button onClick={()=>sortHandler('GPADescending')}>GPA Descending</button></li>
-                <li><button onClick={()=>sortHandler('GPAAscending')}>GPA Ascending</button></li>
-              </ul>
-            </li>
-            <li>
-              Filter
-              <ul>
-                <li className='link'><button onClick={()=>filterHandler('')}>All Students</button></li>
-                <li className='link'><button onClick={()=>filterHandler('unenrolled')}>Unenrolled Students</button></li>
-                <li>
-                  Campuses
-                  <ul>
-                  {campuses.map(campus => {
-                    return(
-                      <li className='link' key={campus.id}><button onClick={()=>filterHandler(`${campus.name}`)}>{campus.name}</button></li>
-                    )
-                  })
-                    }
-                  </ul>
-                </li>
-              </ul>
-            </li>
-           </ul>
+           <StudentNav campuses={campuses} sortHandler={sortHandler} filterHandler={filterHandler} />
           </div>
           <div>
             <table>
