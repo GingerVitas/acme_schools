@@ -24,7 +24,6 @@ deleteFunction(student){
   }
 
   render(){
-    console.log('*****Student Card Render Test****', this.props)
     const {students, campuses} = this.props
     const {deleteFunction} = this;
     if(!students.length) return (<tr><td>No matching students</td></tr>)

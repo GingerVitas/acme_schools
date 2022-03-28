@@ -17,14 +17,10 @@ class Students extends React.Component {
   }
 
   sortHandler(str) {
-    console.log('*****SORT HANDLER INITIALISED*****', str)
     this.setState({sortView: str})
-    console.log('*****SORT HANDLER CALLED*****', this.state)
   }
   filterHandler(str) {
-    console.log('*****FILTER HANDLER INITIALISED*****', str)
     this.setState({filterView: str})
-    console.log(this.state)
   }
   
   render(){
@@ -32,7 +28,7 @@ class Students extends React.Component {
     const {sortView, filterView} = this.state;
     const {sortHandler, filterHandler} = this
     let modifiedStudents = 
-       sortView === 'lastNameAscending' ? students.sort((a, b) => {
+       sortView === 'lastNameAscending' ? [...students].sort((a, b) => {
         const nameA = a.lastName.toUpperCase(); 
         const nameB = b.lastName.toUpperCase(); 
         if (nameA < nameB) {
@@ -43,7 +39,7 @@ class Students extends React.Component {
         }
         return 0;
       })
-      : sortView === 'lastNameDescending' ? students.sort((a, b) => {
+      : sortView === 'lastNameDescending' ? [...students].sort((a, b) => {
         const nameA = a.lastName.toUpperCase(); 
         const nameB = b.lastName.toUpperCase(); 
         if (nameA > nameB) {
@@ -54,7 +50,7 @@ class Students extends React.Component {
         }
         return 0;
       })
-      : sortView === 'GPADescending' ? students.sort((a, b) => {
+      : sortView === 'GPADescending' ? [...students].sort((a, b) => {
         const gpaA = a.gpa;
         const gpaB = b.gpa;
         if (gpaA > gpaB) {
@@ -65,7 +61,7 @@ class Students extends React.Component {
         }
         return 0;
       })
-      : sortView === 'GPAAscending' ? students.sort((a, b) => {
+      : sortView === 'GPAAscending' ? [...students].sort((a, b) => {
         const gpaA = a.gpa;
         const gpaB = b.gpa;
         if (gpaA < gpaB) {
@@ -76,7 +72,7 @@ class Students extends React.Component {
         }
         return 0;
       })
-      : students.sort((a, b) => {
+      : [...students].sort((a, b) => {
         if (a.id < b.id) {
           return -1;
         }
