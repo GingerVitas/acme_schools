@@ -1,21 +1,27 @@
 import React from 'react';
 
-const Pagination = ({studentsPerPage, totalStudents}) => {
+const Pagination = ({studentsPerPage, totalModifiedStudents, paginate}) => {
   const pageNumbers = [];
 
-  for (let i=1; i <= Math.ceil(totalStudents/studentsPerPage); i++){
+  for (let i=1; i <= Math.ceil(totalModifiedStudents/studentsPerPage); i++){
     pageNumbers.push(i);
   }
-  console.log(pageNumbers)
   return(
+    <div>
       <ul>
         {pageNumbers.map(page => {
-          <li key={page} className='page-item'>
-            <a onClick={(page) => paginate(page)} href='!#' className='page-link'>{page}</a>
+          return(
+            <li key={page} className='page-item'>
+            <a onClick={() => paginate(page)} href='#/students' className='page-link'>{page}</a>
           </li>
+          )
         })}
-      </ul>
+      </ul> 
+    </div>
+
   )
 }
 
 export default Pagination
+
+{/* */}

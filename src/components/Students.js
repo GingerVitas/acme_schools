@@ -114,7 +114,7 @@ class Students extends React.Component {
             </table>
           </div>
           <div>
-           <Pagination studentsPerPage={studentsPerPage} totalStudents={students.length} paginate={paginate}/>
+           <Pagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} paginate={paginate}/>
           </div>
         </div>
         <div className='createStudentFormContainer'>
