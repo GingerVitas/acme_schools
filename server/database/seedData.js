@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const {db} = require('./index');
 
 
-const campuses = [...Array(5)].map(campus => (
+const campuses = [...Array(200)].map(campus => (
   {
     name: faker.company.companyName(),
     imageUrl: faker.image.avatar(),
@@ -12,7 +12,7 @@ const campuses = [...Array(5)].map(campus => (
   }
 ));
 
-const students = [...Array(20)].map(student => (
+const students = [...Array(500)].map(student => (
   {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

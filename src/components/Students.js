@@ -27,7 +27,7 @@ class Students extends React.Component {
   filterHandler(str) {
     this.setState({filterView: str})
   }
-  paginate(page) {
+  setCurrentPage(page) {
     this.setState({currentPage: page});
   } 
   
@@ -114,7 +114,7 @@ class Students extends React.Component {
             </table>
           </div>
           <div>
-           <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} paginate={paginate}/>
+           <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} setCurrentPage={paginate} currentPage={currentPage}/>
           </div>
         </div>
         <div className='createStudentFormContainer'>
