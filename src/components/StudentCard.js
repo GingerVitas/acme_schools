@@ -10,10 +10,6 @@ class StudentCard extends React.Component {
     this.deleteFunction = this.deleteFunction.bind(this)
   }
 
-  componentDidMount(){
-    this.props.loadStudents();
-  }
-
 deleteFunction(student){
     const {students} = this.props
     this.props.deleteStudent(student).then(() => {
@@ -28,8 +24,10 @@ deleteFunction(student){
   }
 
   render(){
-    const {students, campuses, loadStudents} = this.props
+    console.log('*****Student Card Render Test****', this.props)
+    const {students, campuses} = this.props
     const {deleteFunction} = this;
+    if(!students.length) return (<tr><td>No matching students</td></tr>)
     return(
       students.map(student => {
         const campus = campuses.find(campus => campus.id === student.campusId);
@@ -55,9 +53,8 @@ deleteFunction(student){
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteStudent: (student) => dispatch(deleteStudent(student)),
-    loadStudents: () => dispatch(loadStudents())
+    deleteStudent: (student) => dispatch(deleteStudent(student))
   }
 };
 
-export default connect(state=>state, mapDispatchToProps)(StudentCard);
+export default connect(null, mapDispatchToProps)(StudentCard);

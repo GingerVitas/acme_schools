@@ -89,7 +89,7 @@ class Students extends React.Component {
     modifiedStudents = filterView === '' ? modifiedStudents
       : filterView === 'unenrolled' ? modifiedStudents.filter(student => student.campusId === null)
       : campuses.map(campus=> {
-        if (filterView === campus.name) return modifiedStudents.filter(student => student.campusId === campus.id)})
+        if (filterView === campus.name) return modifiedStudents.filter(student => student.campusId === campus.id)}).flat().filter(item => !!item)
 
 
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
@@ -130,7 +130,7 @@ class Students extends React.Component {
           </div>
           <table>
             <tbody>
-              <StudentCard students={modifiedStudents}/>
+              <StudentCard students={modifiedStudents} campuses={campuses}/>
             </tbody>
           </table>
         </div>
