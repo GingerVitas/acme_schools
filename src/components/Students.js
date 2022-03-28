@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {addStudent, loadStudents} from '../store/studentStore';
 import StudentCard from './StudentCard';
 import CreateStudentForm from './CreateStudentForm';
+import Pagination from './Pagination';
 
 
 class Students extends React.Component {
@@ -11,9 +12,12 @@ class Students extends React.Component {
     this.state ={
       sortView: '',
       filterView: '',
+      currentPage: 1,
+      studentsPerPage: 10
     }
     this.sortHandler = this.sortHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
+    this.paginate = this.paginate.bind(this)
   }
 
   sortHandler(str) {
@@ -22,11 +26,16 @@ class Students extends React.Component {
   filterHandler(str) {
     this.setState({filterView: str})
   }
+  paginate(page) {
+    this.setState({currentPage: page});
+  } 
   
   render(){
     const {students, campuses} = this.props;
-    const {sortView, filterView} = this.state;
-    const {sortHandler, filterHandler} = this
+    const {sortView, filterView, currentPage, studentsPerPage} = this.state;
+    const {sortHandler, filterHandler, paginate} = this
+    const indexOfLastStudent = currentPage * studentsPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
     let modifiedStudents = 
        sortView === 'lastNameAscending' ? [...students].sort((a, b) => {
         const nameA = a.lastName.toUpperCase(); 
@@ -87,7 +96,7 @@ class Students extends React.Component {
       : campuses.map(campus=> {
         if (filterView === campus.name) return modifiedStudents.filter(student => student.campusId === campus.id)}).flat().filter(item => !!item)
 
-
+    const currentStudents = modifiedStudents.slice(indexOfFirstStudent, indexOfLastStudent);
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
       <div className='studentsContainer'>
@@ -127,9 +136,12 @@ class Students extends React.Component {
           <div>
             <table>
               <tbody>
-                <StudentCard students={modifiedStudents} campuses={campuses}/>
+                <StudentCard students={currentStudents} campuses={campuses}/>
               </tbody>
             </table>
+          </div>
+          <div>
+           <Pagination studentsPerPage={studentsPerPage} totalStudents={students.length} paginate={paginate}/>
           </div>
         </div>
         <div className='createStudentFormContainer'>
