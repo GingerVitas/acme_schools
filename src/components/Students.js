@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {addStudent, loadStudents} from '../store/studentStore';
 import StudentCard from './StudentCard';
 import CreateStudentForm from './CreateStudentForm';
-import Pagination from './Pagination';
+import StudentPagination from './StudentPagination';
 import StudentNav from './StudentNav';
 
 
@@ -114,7 +114,7 @@ class Students extends React.Component {
             </table>
           </div>
           <div>
-           <Pagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} paginate={paginate}/>
+           <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} paginate={paginate}/>
           </div>
         </div>
         <div className='createStudentFormContainer'>

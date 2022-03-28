@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import CreateCampusForm from './CreateCampusForm';
 import CampusCard from './CampusCard';
 import CampusesNav from './CampusesNav';
+import CampusPagination from './CampusPagination';
 
 class Campuses extends React.Component {
   constructor(props){
@@ -10,9 +11,12 @@ class Campuses extends React.Component {
     this.state = {
       sortView: '',
       filterView: '',
+      currentPage: 1,
+      campusesPerPage: 10
     }
     this.sortHandler = this.sortHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
+    this.paginate = this.paginate.bind(this);
   }
 
   sortHandler(str) {
@@ -21,12 +25,17 @@ class Campuses extends React.Component {
   filterHandler(str) {
     this.setState({filterView: str})
   }
-
+  paginate(page) {
+    this.setState({currentPage: page});
+  } 
 
   render() {
     const {students, campuses} = this.props
-    const {sortView, filterView} = this.state;
-    const {sortHandler, filterHandler} = this
+    const {sortView, filterView, currentPage, campusesPerPage} = this.state;
+    const {sortHandler, filterHandler, paginate} = this
+
+    const indexOfLastCampus = currentPage * campusesPerPage;
+    const indexOfFirstCampus = indexOfLastCampus - campusesPerPage;
     
     let modifiedCampuses = 
       sortView === 'enrolledDescending' ? [...campuses].sort((a, b) => {
@@ -67,6 +76,8 @@ class Campuses extends React.Component {
         if (!enrolledStudents.length) return campus
       })
 
+    const currentCampuses = modifiedCampuses.slice(indexOfFirstCampus, indexOfLastCampus);
+
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
     <div className='campusesContainer'>
@@ -76,8 +87,11 @@ class Campuses extends React.Component {
         </div>
         <div>
           <table>
-            <CampusCard campuses={modifiedCampuses} students={students} />
+            <CampusCard campuses={currentCampuses} students={students} />
           </table>
+        </div>
+        <div>
+          <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} paginate={paginate}/>
         </div>
       </div>
       <div className='addCampusFormContainer'>

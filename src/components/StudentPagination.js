@@ -7,21 +7,19 @@ const Pagination = ({studentsPerPage, totalModifiedStudents, paginate}) => {
     pageNumbers.push(i);
   }
   return(
-    <div>
+    <nav>
       <ul>
         {pageNumbers.map(page => {
           return(
             <li key={page} className='page-item'>
-            <a onClick={() => paginate(page)} href='#/students' className='page-link'>{page}</a>
+            <a onClick={() => paginate(page)} href={`#/students?page=${page}`} className='page-link'>{page}</a>
           </li>
           )
         })}
       </ul> 
-    </div>
+    </nav>
 
   )
 }
 
 export default Pagination
-
-{/* */}
