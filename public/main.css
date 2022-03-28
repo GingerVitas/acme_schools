@@ -16,6 +16,10 @@ header {
   color: #f0f7ee;
 }
 
+.selected {
+  background-color:#ca3c25;
+}
+
 .navContainer, .filterContainer, .studentsContainer, .campusesContainer, .studentSort {
   display: flex;
   width: 100%;
