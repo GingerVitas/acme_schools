@@ -1,73 +1,103 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {createCampus, deleteCampus} from '../store/campusStore';
-import {updateMultiple} from '../store/studentStore';
+import CreateCampusForm from './CreateCampusForm';
+import CampusCard from './CampusCard';
 
 class Campuses extends React.Component {
   constructor(props){
-    super(props)
+    super(props),
     this.state = {
-      name: '',
-      imageUrl: '',
-      address: '',
-      description: '',
+      sortView: '',
+      filterView: '',
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-  
-  handleSubmit(ev){
-    ev.preventDefault();
-    this.props.createCampus({...this.state});
+    this.sortHandler = this.sortHandler.bind(this);
+    this.filterHandler = this.filterHandler.bind(this);
   }
 
-  handleChange(ev){
-    this.setState({
-      [ev.target.name]:ev.target.value
-    })
+  sortHandler(str) {
+    this.setState({sortView: str})
+  }
+  filterHandler(str) {
+    this.setState({filterView: str})
   }
 
-  async handleDelete(ev, campus) {
-    ev.preventDefault();
-    await this.props.updateMultiple(campus)
-    await this.props.deleteCampus(campus);
-  }
-  
 
   render() {
     const {students, campuses} = this.props
-    const {name, imageUrl, address, description} = this.state
-    const {handleSubmit, handleChange, handleDelete} = this
+    const {sortView, filterView} = this.state;
+    const {sortHandler, filterHandler} = this
+    
+    let modifiedCampuses = 
+      sortView === 'enrolledDescending' ? [...campuses].sort((a, b) => {
+        const enrolledA = students.filter(student => student.campusId === a.id)
+        const enrolledB = students.filter(student => student.campusId === b.id)
+        if (enrolledA > enrolledB) {
+          return -1;
+        }
+        if (enrolledA < enrolledB) {
+          return 1;
+        }
+        return 0;
+      })
+      : sortView === 'enrolledAscending' ? [...campuses].sort((a, b) => {
+        const enrolledA = students.filter(student => student.campusId === a.id)
+        const enrolledB = students.filter(student => student.campusId === b.id)
+        if (enrolledA < enrolledB) {
+          return -1;
+        }
+        if (enrolledA > enrolledB) {
+          return 1;
+        }
+        return 0;
+      })
+      : [...campuses].sort((a, b) => {
+        if (a.id < b.id) {
+          return -1;
+        }
+        if (a.id > b.id) {
+          return 1;
+        }
+        return 0;
+      });
+
+    modifiedCampuses = filterView === '' ? modifiedCampuses
+      : modifiedCampuses.filter(campus => {
+        const enrolledStudents = students.filter(student => student.campusId === campus.id);
+        if (!enrolledStudents.length) return campus
+      })
+
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
     <div className='campusesContainer'>
       <div className='campusListContainer'>
-        <ul>
-          {campuses.map(campus => {
-            const enrolledStudents = students.filter(student => student.campusId === campus.id);
-            return (
-            <li key={campus.id}>
-              <Link to={`campuses/${campus.id}`} >{campus.name} ({enrolledStudents.length} Enrolled Students) </Link>
-              <div>
-                <img src={campus.imageUrl} />{campus.address}
-              </div>
-              <button onClick={(ev) => handleDelete(ev, campus)}>Sell This Campus</button>
+        <div className='campusesNav'>
+          <ul>
+            <li>
+              Sort
+              <ul>
+                <li className='link'><button onClick={()=> sortHandler('')}>Default Order</button></li>
+                <li className='link'><button onClick={()=> sortHandler('enrolledDescending')}>Enrolled Students (Descending)</button></li>
+                <li className='link'><button onClick={()=> sortHandler('enrolledAscending')}>Enrolled Students (Ascending)</button></li>
+              </ul>
             </li>
-                    
-            )
-          })}
-        </ul>
+            <li>
+              Filter
+              <ul>
+               <li className='link'><button onClick={()=> filterHandler('')}>All Campuses</button></li>
+               <li className='link'><button onClick={()=> filterHandler('emptyCampuses')}>No Enrolled Students</button></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <table>
+            <CampusCard campuses={modifiedCampuses} students={students} />
+          </table>
+        </div>
       </div>
       <div className='addCampusFormContainer'>
-        <form onSubmit={handleSubmit}>
-          <input name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
-          <input name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
-          <input name='address' value={address} onChange={handleChange} placeholder='Campus Address' required onInvalid={e => e.target.setCustomValidity('Please enter a valid address for the campus')}/>
-          <textarea name='description' value={description} onChange={handleChange} placeholder='Describe the campus' />
-          <button type='submit'>Register your new campus!</button>
-        </form>
+          <CreateCampusForm />
       </div>
     </div>
   )
@@ -78,8 +108,6 @@ class Campuses extends React.Component {
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
     createCampus: (campus) => dispatch(createCampus(campus, history)),
-    deleteCampus: (campus) => dispatch(deleteCampus(campus)),
-    updateMultiple: (id) => dispatch(updateMultiple(id))
   }
 }
 

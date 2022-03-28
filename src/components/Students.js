@@ -124,11 +124,13 @@ class Students extends React.Component {
             </li>
            </ul>
           </div>
-          <table>
-            <tbody>
-              <StudentCard students={modifiedStudents} campuses={campuses}/>
-            </tbody>
-          </table>
+          <div>
+            <table>
+              <tbody>
+                <StudentCard students={modifiedStudents} campuses={campuses}/>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className='createStudentFormContainer'>
           <CreateStudentForm />
