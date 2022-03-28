@@ -14,9 +14,9 @@ class StudentCard extends React.Component {
     this.props.loadStudents();
   }
 
-  async deleteFunction(student){
+deleteFunction(student){
     const {students} = this.props
-    await this.props.deleteStudent(student).then(() => {
+    this.props.deleteStudent(student).then(() => {
       if (students[0].id === student.id) {
         return(
           this.props.loadStudents().then(alert('All filtered students removed from database!'))
@@ -42,7 +42,6 @@ class StudentCard extends React.Component {
               <div className='studentCardEmail'>{student.email}</div>
               <div className='studentGpa'>{student.gpa}</div>
             </td>
-            
             <td>
             <button onClick={()=> deleteFunction(student)}>Remove from Database</button>
             </td>

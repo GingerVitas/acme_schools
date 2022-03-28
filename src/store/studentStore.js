@@ -42,18 +42,17 @@ export const loadStudents = () => {
   }
 };
 
-export const updateStudent = (student, history) => {
+export const updateStudent = (student) => {
   return async(dispatch) => {
     const updatedStudent = (await axios.put(`/api/students/${student.id}`, student)).data;
     dispatch(_updateStudent(updatedStudent));
   }
 };
 
-export const addStudent = (student, history) => {
+export const addStudent = (student) => {
   return async(dispatch) => {
     const newStudent = (await axios.post('/api/students', student)).data;
     dispatch(_addStudent(newStudent));
-    history.push(`/students/${newStudent.id}`)
   }
 };
 

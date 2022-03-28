@@ -25,6 +25,10 @@ header {
   justify-content: center;
 }
 
+input, textarea {
+  background-color: whitesmoke;
+  color: black;
+}
 
 .nav {
   display: flex;
@@ -77,5 +81,4 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: sticky;
 }

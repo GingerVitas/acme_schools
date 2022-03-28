@@ -17,7 +17,7 @@ class Student extends React.Component{
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleGPAChange =this.handleGPAChange.bind(this);
+    this.handleGPAChange = this.handleGPAChange.bind(this);
   };
 
   handleChange(ev){
@@ -44,8 +44,6 @@ class Student extends React.Component{
       })
     }
   };
-
-
 
   componentDidUpdate(prevProps){
     if(!prevProps.student && this.props.student){
@@ -76,8 +74,19 @@ class Student extends React.Component{
     }
     return(
       <div>
-        <h2>Details for {student.firstName} {student.lastName}</h2>
-        {!campus ? <h3>Not Currently Enrolled</h3> : <h3>Attends <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></h3> }
+        <table>
+          <tbody>
+          <tr key={student.id}>
+              <td>
+              <img className='studentCardImg' src={student.imageUrl} />
+                <div className='studentCardName'>{student.firstName} {student.lastName}</div>
+                <Link to={!campus ? '': `/campuses/${campus.id}`}><div className='studentCardEnrollment'>{!campus ? 'Not Currently Enrolled' : `Student at ${campus.name}`}</div></Link>
+                <div className='studentCardEmail'>{student.email}</div>
+                <div className='studentGpa'>{student.gpa}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <form onSubmit={handleSubmit}>
           <input name='firstName' value={firstName} onChange={handleChange} />
           <input name='lastName' value={lastName} onChange={handleChange} />
@@ -111,6 +120,7 @@ const mapStateToProps = ({students, campuses}, {match}) => {
 
 const mapDispatchToProps = (dispatch, {history}) => {
   return {
+    deleteStudent: (student) => dispatch(deleteStudent(student)),
     updateStudent: (student) => dispatch(updateStudent(student, history)),
     loadStudents: () => dispatch(loadStudents())
   }

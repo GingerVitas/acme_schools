@@ -30,10 +30,10 @@ class App extends React.Component{
         <div className='renderContainer'>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/students' component={Students} />
-            <Route exact path='/campuses' component={Campuses} />
             <Route exact path='/students/:id' component={Student} />
             <Route exact path='/campuses/:id' component={Campus} />
+            <Route path='/students' component={Students} />
+            <Route path='/campuses' component={Campuses} />
             <Route path='*' component={NotFound} />
           </Switch>
 
