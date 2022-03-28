@@ -101,19 +101,19 @@ class Students extends React.Component {
     
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
-      <div className='studentsContainer'>
+      <div className='d-inline-flex'>
         <div className='studentsListContainer'>
           <div className='studentsNav'>
            <StudentNav campuses={campuses} sortHandler={sortHandler} filterHandler={filterHandler} />
           </div>
-          <div>
+          <div className='studentCards'>
             <table>
               <tbody>
                 <StudentCard students={currentStudents} campuses={campuses}/>
               </tbody>
             </table>
           </div>
-          <div>
+          <div className='studentPagination'>
            <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
           </div>
         </div>

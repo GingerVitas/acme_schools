@@ -5,7 +5,6 @@ const {db} = require('./index');
 const campuses = [...Array(200)].map(campus => (
   {
     name: faker.company.companyName(),
-    imageUrl: faker.image.avatar(),
     address: faker.fake(`{{address.streetAddress}} {{address.streetSuffix}}
     {{address.city}}, {{address.state}} {{address.zipCode}}`),
     description: faker.lorem.paragraphs(4)
