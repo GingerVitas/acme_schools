@@ -3,7 +3,7 @@ import {Nav, Navbar, NavDropdown, Container} from 'react-bootstrap';
 
 const CampusesNav = ({sortHandler, filterHandler}) => {
   return(
-    <Navbar bg='light' expand='lg'>
+    <Navbar bg='light' expand='lg' style={{position:'sticky', top:'55px', zIndex:'25', marginBottom:'2rem', flexBasis:'100%'}}>
       <Container fluid>
         <Nav className='me-auto my-2 my-lg-0'>
           <NavDropdown title='Sort'>

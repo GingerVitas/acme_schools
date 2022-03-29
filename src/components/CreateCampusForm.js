@@ -32,7 +32,8 @@ class CreateCampusForm extends React.Component {
     const {handleSubmit, handleChange} = this
 
     return(
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} style={{position:'fixed', width:'40%', right:'1vw', top:'35vh'}}>
+        <Form.Label style={{fontSize:'25px'}}>Create a new Campus!</Form.Label>
         <Form.Group>
           <Form.Control name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
           <Form.Control name='imageUrl' type='url' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
