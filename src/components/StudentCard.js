@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {deleteStudent, loadStudents} from '../store/studentStore';
 import {Link} from 'react-router-dom';
+import {Card, Col, Button} from 'react-bootstrap';
 
 class StudentCard extends React.Component {
   constructor(props){
@@ -16,7 +17,7 @@ deleteFunction(student){
       }
     )
   }
-
+  // <Link to={`/students/${student.id}`}></Link>
   render(){
     const {students, campuses} = this.props
     const {deleteFunction} = this;
@@ -25,18 +26,22 @@ deleteFunction(student){
       students.map(student => {
         const campus = campuses.find(campus => campus.id === student.campusId);
         return (
-          <tr key={student.id}>
-            <td>
-            <Link to={`/students/${student.id}`}><img className='studentCardImg' src={student.imageUrl} /></Link>
-              <div className='studentCardName'>{student.firstName} {student.lastName}</div>
-              <div className='studentCardEnrollment'>{!campus ? 'Not Currently Enrolled' : `Student at ${campus.name}`}</div>
-              <div className='studentCardEmail'>{student.email}</div>
-              <div className='studentGpa'>{student.gpa}</div>
-            </td>
-            <td>
-            <button onClick={()=> deleteFunction(student)}>Remove from Database</button>
-            </td>
-          </tr>
+          <Col key={student.id}>
+            <Card style={{width:'300px'}}>
+              <Card.Img src={student.imageUrl} />
+              <Card.Body>
+                <Card.Title>{student.firstName} {student.lastName}</Card.Title>
+                <Card.Subtitle>{!campus ? 'Not Currently Enrolled' : `Student at ${campus.name}`}</Card.Subtitle>
+                <Card.Subtitle>{student.email}</Card.Subtitle>
+                <Card.Subtitle>{student.gpa}</Card.Subtitle>
+              </Card.Body>
+              <div className="d-grid gap-2">
+                <Button variant="primary" size="lg" onClick={()=> deleteFunction(student)}>
+                  Remove from Database
+                </Button>
+              </div>
+            </Card>
+          </Col>
         )
       })
     )

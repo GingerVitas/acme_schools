@@ -8,7 +8,6 @@ const StudentNav = ({campuses, sortHandler, filterHandler}) => {
       <Container fluid>
       <Nav
         className="me-auto my-2 my-lg-0"
-        style={{ maxHeight: '100px' }}
       >
         <NavDropdown title="Sort">
           <NavDropdown.Item as='button'><div onClick={()=> sortHandler('')}>Default Order</div></NavDropdown.Item>
@@ -17,17 +16,17 @@ const StudentNav = ({campuses, sortHandler, filterHandler}) => {
           <NavDropdown.Item as='button'><div onClick={()=> sortHandler('GPADescending')}>GPA Descending</div></NavDropdown.Item>
           <NavDropdown.Item as='button'><div onClick={()=> sortHandler('GPAAscending')}>GPA Ascending</div></NavDropdown.Item>
         </NavDropdown>
-        <NavDropdown title='Filter' navbarScroll>
+        <NavDropdown title='Filter'>
           <NavDropdown.Item as='button'><div onClick={()=>filterHandler('')}>All Students</div></NavDropdown.Item>
           <NavDropdown.Item as='button'><div onClick={()=>filterHandler('unenrolled')}>Unenrolled Students</div></NavDropdown.Item>
-          <NavDropdown title='Campuses' navbarScroll style={{maxHeight: '100px'}}>
+          {/*<NavDropdown title='Campuses' style={{overflowY:'auto', minHeight:'50px'}}>
             {campuses.map(campus => {
                 return(
-                  <NavDropdown.Item as='button' key={campus.id}><div onClick={()=>filterHandler(`${campus.name}`)}>{campus.name}</div></NavDropdown.Item>
+                  <NavDropdown.Item as='button' key={campus.id} minheight={'50px'}><div onClick={()=>filterHandler(`${campus.name}`)}>{campus.name}</div></NavDropdown.Item>
                 )
               })
                 }
-          </NavDropdown>
+              </NavDropdown> Commented out because I can't get the nesting to work right, and unwieldy for 200 campuses*/}
         </NavDropdown>
       </Nav>
       </Container>
