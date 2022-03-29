@@ -23,12 +23,9 @@ class App extends React.Component{
       <HashRouter>
         <Container fluid>
           <header>
-            <Link to='/' style={{ textDecoration: 'none', color: 'inherit', textAlign:'center' }}><h1>ACME Campus Enrollments</h1></Link>
-            <nav style={{position:'sticky', top:'0'}}>
-              <Route component={NavMenu}/>
-            </nav>
+            <h1 style={{textAlign:'center', fontSize:'55px'}}><Link to='/' style={{ textDecoration: 'none', color: 'inherit'}}>ACME Campus Enrollments</Link></h1>
           </header>
-          <div className='renderContainer'>
+          <Route component={NavMenu}/>
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/students/:id' component={Student} />
@@ -37,7 +34,6 @@ class App extends React.Component{
               <Route path='/campuses' component={Campuses} />
               <Route path='*' component={NotFound} />
             </Switch>
-          </div>
         </Container>  
       </HashRouter>
     )

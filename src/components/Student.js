@@ -93,7 +93,7 @@ class Student extends React.Component{
           <input name='email' value={email} onChange={handleChange} />
           <input name='imageUrl' value={imageUrl} onChange={handleChange} />
           <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId === null ? '' : campusId} onChange={ev => this.setState({campusId:ev.target.value*1})}>
+          <select name='campusId' value={campusId ? campusId : ''} onChange={ev => this.setState({campusId:ev.target.value*1})}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {
               return (

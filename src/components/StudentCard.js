@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {deleteStudent, loadStudents} from '../store/studentStore';
 import {Link} from 'react-router-dom';
-import {Card, Col, Button} from 'react-bootstrap';
+import {Card, Col, Button, Container} from 'react-bootstrap';
+import './customStyles.css'
 
 class StudentCard extends React.Component {
   constructor(props){
@@ -26,22 +27,28 @@ deleteFunction(student){
       students.map(student => {
         const campus = campuses.find(campus => campus.id === student.campusId);
         return (
-          <Col key={student.id} style={{maxWidth:'300px'}}>
-            <Card style={{maxWidth:'300px'}}>
-            <Link to={`/students/${student.id}`}><Card.Img src={student.imageUrl} /></Link>
-              <Card.Body>
-                <Card.Title>{student.firstName} {student.lastName}</Card.Title>
-                {!campus ? <Card.Subtitle>Not Currently Enrolled</Card.Subtitle> : <Link to={`/campuses/${campus.id}`}><Card.Subtitle>Student at {campus.name}</Card.Subtitle></Link>}
-                <Card.Subtitle>Email: {student.email}</Card.Subtitle>
-                <Card.Subtitle>GPA: {student.gpa}</Card.Subtitle>
-              </Card.Body>
-              <div className="d-grid gap-2">
-                <Button variant="primary" size="lg" onClick={()=> deleteFunction(student)}>
-                  Remove from Database
-                </Button>
-              </div>
-            </Card>
-          </Col>
+          <div key={student.id} >
+            <Container className='studentCard'>
+              <Col style={{display:'flex', justifyContent:'center'}}>
+                <Card style={{border:'none', flexDirection:'row', minWidth:'485px', maxWidth:'485px', minHeight:'135px', maxHeight:'135px'}}>
+                  <Link to={`/students/${student.id}`} style={{textDecoration:'none'}}><Card.Img src={student.imageUrl} /></Link>
+                  <Card style={{border:'none', minWidth:'365px', maxWidth:'365px', minHeight:'135px', maxHeight:'135px', textAlign:'center'}}>
+                    <Card.Body>
+                      <Card.Title><Link to={`/students/${student.id}`} style={{textDecoration:'none', color:'inherit'}}>{student.firstName} {student.lastName}</Link></Card.Title>
+                      {!campus ? <Card.Subtitle style={{padding:'5px'}}>Not Currently Enrolled</Card.Subtitle> : <Card.Subtitle style={{padding:'5px'}}>Student at <Link to={`/campuses/${campus.id}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
+                      <Card.Subtitle style={{padding:'5px'}}>Email: {student.email}</Card.Subtitle>
+                      <Card.Subtitle>GPA: {student.gpa}</Card.Subtitle>
+                    </Card.Body>
+                  </Card>
+                </Card>
+              </Col>
+              <Button variant="primary" style={{marginTop:'.5em'}} size="lg" onClick={()=> deleteFunction(student)}>
+                      Remove from Database
+              </Button>
+            </Container>
+          </div>
+          
+          
         )
       })
     )
