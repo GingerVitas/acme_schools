@@ -76,7 +76,7 @@ class CreateStudentForm extends Component {
             </Row>
             <Row>
               <Col>
-                <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Upload a picture' onChange={handleChange} />
+                <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Link your picture here' onChange={handleChange} />
               </Col>
               <Col>
                 <Form.Control name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />

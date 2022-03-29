@@ -75,9 +75,9 @@ class Student extends React.Component{
     }
     return(
       <div style={{display:'flex', marginTop:'2rem', alignItems:'center'}} key={student.id}>
-        <Container style={{flexBasis:'60%', display:'flex', justifyContent:'center', maxHeight:'20vh'}}>
-            <Card border='primary' style={{flexDirection:'row', alignItems:'center'}}>
-                <Card.Img style={{padding:'1rem', flexBasis:'30%'}} src={student.imageUrl} />
+        <Container className='studentCard' style={{flexBasis:'55%'}}>
+            <Card style={{flexDirection:'row', alignItems:'center'}}>
+                <Card.Img style={{padding:'1rem', flexBasis:'30%', maxHeight:'30vh'}} src={student.imageUrl} />
                 <Card style={{border:'none', textAlign:'center', flexBasis:'70%'}}>
                   <Card.Body>
                     <Card.Title>{student.firstName} {student.lastName}</Card.Title>
