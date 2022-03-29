@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const {db} = require('./index');
 
 
-const campuses = [...Array(10)].map(campus => (
+const campuses = [...Array(200)].map(campus => (
   {
     name: faker.company.companyName(),
     address: faker.fake(`{{address.streetAddress}} {{address.streetSuffix}}
@@ -11,7 +11,7 @@ const campuses = [...Array(10)].map(campus => (
   }
 ));
 
-const students = [...Array(500)].map(student => (
+const students = [...Array(1000)].map(student => (
   {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
