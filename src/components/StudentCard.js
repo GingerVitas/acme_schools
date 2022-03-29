@@ -35,8 +35,8 @@ deleteFunction(student){
                   <Card style={{border:'none', minWidth:'365px', maxWidth:'365px', minHeight:'135px', maxHeight:'135px', textAlign:'center'}}>
                     <Card.Body>
                       <Card.Title><Link to={`/students/${student.id}`} style={{textDecoration:'none', color:'inherit'}}>{student.firstName} {student.lastName}</Link></Card.Title>
-                      {!campus ? <Card.Subtitle style={{padding:'5px'}}>Not Currently Enrolled</Card.Subtitle> : <Card.Subtitle style={{padding:'5px'}}>Student at <Link to={`/campuses/${campus.id}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
-                      <Card.Subtitle style={{padding:'5px'}}>Email: {student.email}</Card.Subtitle>
+                      {!campus ? <Card.Subtitle style={{paddingTop:'.5rem'}}>Not Currently Enrolled</Card.Subtitle> : <Card.Subtitle style={{paddingTop:'.5rem'}}>Student at <Link to={`/campuses/${campus.id}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
+                      <Card.Subtitle style={{padding:'.5rem'}}>Email: {student.email}</Card.Subtitle>
                       <Card.Subtitle>GPA: {student.gpa}</Card.Subtitle>
                     </Card.Body>
                   </Card>
