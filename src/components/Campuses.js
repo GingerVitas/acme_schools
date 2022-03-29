@@ -4,6 +4,7 @@ import CreateCampusForm from './CreateCampusForm';
 import CampusCard from './CampusCard';
 import CampusesNav from './CampusesNav';
 import CampusPagination from './CampusPagination';
+import {Row} from 'react-bootstrap';
 
 class Campuses extends React.Component {
   constructor(props){
@@ -80,24 +81,23 @@ class Campuses extends React.Component {
 
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
-    <div className='campusesContainer'>
-      <div className='campusListContainer'>
-        <div className='campusesNav'>
+    <div>
+        <div className='campusListContainer' style={{display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
           <CampusesNav sortHandler={sortHandler} filterHandler={filterHandler} />
+          <div className='campusCards' style={{flexBasis:'60%'}}>
+            <Row>
+              <CampusCard campuses={currentCampuses} students={students} />
+            </Row>  
+          </div>
+          <div className='addCampusFormContainer' style={{textAlign:'center', flexBasis:'40%'}}>
+                <CreateCampusForm />
+          </div>
         </div>
-        <div>
-          <table>
-            <CampusCard campuses={currentCampuses} students={students} />
-          </table>
+        <div className='campusPagination' style={{display:'flex', justifyContent:'center', marginTop:'1rem'}}>
+            <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
         </div>
-        <div>
-          <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
-        </div>
-      </div>
-      <div className='addCampusFormContainer'>
-          <CreateCampusForm />
-      </div>
     </div>
+    
   )
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {createCampus} from '../store/campusStore';
+import {Form, Button} from 'react-bootstrap';
 
 class CreateCampusForm extends React.Component {
   constructor(props){
@@ -31,13 +32,17 @@ class CreateCampusForm extends React.Component {
     const {handleSubmit, handleChange} = this
 
     return(
-      <form onSubmit={handleSubmit}>
-          <input name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
-          <input name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
-          <input name='address' value={address} onChange={handleChange} placeholder='Campus Address' required onInvalid={e => e.target.setCustomValidity('Please enter a valid address for the campus')}/>
-          <textarea name='description' value={description} onChange={handleChange} placeholder='Describe the campus' />
-          <button type='submit'>Register your new campus!</button>
-      </form>
+      <Form onSubmit={handleSubmit} style={{position:'fixed', width:'40%', right:'1vw', top:'35vh'}}>
+        <Form.Label style={{fontSize:'25px'}}>Create a new Campus!</Form.Label>
+        <Form.Group>
+          <Form.Control name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
+          <Form.Control name='imageUrl' type='url' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
+          <Form.Control name='address' value={address} onChange={handleChange} placeholder='Campus Address' required onInvalid={e => e.target.setCustomValidity('Please enter a valid address for the campus')}/>
+          <Form.Control as='textarea' rows={5} name='description' value={description} onChange={handleChange} placeholder='Describe the campus' />
+          <br></br>
+          <Button type='submit'>Register your new campus!</Button>
+        </Form.Group>
+      </Form>
     )
   }
 

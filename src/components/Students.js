@@ -5,6 +5,7 @@ import StudentCard from './StudentCard';
 import CreateStudentForm from './CreateStudentForm';
 import StudentPagination from './StudentPagination';
 import StudentNav from './StudentNav';
+import {Row} from 'react-bootstrap';
 
 
 class Students extends React.Component {
@@ -25,7 +26,7 @@ class Students extends React.Component {
     this.setState({sortView: str})
   }
   filterHandler(str) {
-    this.setState({filterView: str})
+    this.setState({filterView: str, currentPage: 1})
   }
   setCurrentPage(page) {
     this.setState({currentPage: page});
@@ -101,26 +102,21 @@ class Students extends React.Component {
     
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
-      <div className='studentsContainer'>
         <div className='studentsListContainer'>
-          <div className='studentsNav'>
-           <StudentNav campuses={campuses} sortHandler={sortHandler} filterHandler={filterHandler} />
-          </div>
-          <div>
-            <table>
-              <tbody>
-                <StudentCard students={currentStudents} campuses={campuses}/>
-              </tbody>
-            </table>
-          </div>
-          <div>
-           <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
+            <div className='createStudentFormContainer' style={{textAlign:'center'}}>
+              <h3>Register a new student</h3>
+              <CreateStudentForm />
+            </div>
+            <StudentNav campuses={campuses} sortHandler={sortHandler} filterHandler={filterHandler} />
+            <div className='studentCards'>
+              <Row xs={1} sm={1} md={2} lg={2} xl={2} xxl={2} style={{alignText:'center', margin:'1rem'}}>
+                  <StudentCard students={currentStudents} campuses={campuses} style={{margin:'1rem'}}/>
+              </Row>
+            </div>
+          <div className='studentPagination' style={{display:'flex', justifyContent:'center', marginTop:'1rem'}}>
+                <StudentPagination studentsPerPage={studentsPerPage} totalModifiedStudents={modifiedStudents.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
           </div>
         </div>
-        <div className='createStudentFormContainer'>
-          <CreateStudentForm />
-        </div>
-      </div>
     )
   }
     

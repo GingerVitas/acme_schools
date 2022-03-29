@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {deleteCampus} from '../store/campusStore';
 import {updateMultiple} from '../store/studentStore';
+import {Card, Col, Button, Container} from 'react-bootstrap';
+import './customStyles.css'
 
 class CampusCard extends React.Component {
   constructor(props) {
@@ -22,22 +24,30 @@ class CampusCard extends React.Component {
     const {handleDelete} = this;
 
     return(
-      <tbody>
-        {campuses.map(campus => {
+        campuses.map(campus => {
           const enrolledStudents = students.filter(student => student.campusId === campus.id);
           return (
-            <tr key={campus.id}>
-              <td>
-                <Link to={`/campuses/${campus.id}`}><img className='campusCardImg' src={campus.imageUrl} /></Link>
-                <div className='campusCardName'>{campus.name}</div>
-                <div className='campusCardEnrollees'>{enrolledStudents.length} Enrolled Students</div>
-                <div className='campusCardAddress'>Located at {campus.address}</div>
-                <div className='campusCardButton'><button onClick={(ev)=> handleDelete(ev, campus)}>Sell This Campus</button></div>
-              </td>
-            </tr>
+            <div key={campus.id}>
+              <Container>
+                <Col>
+                  <Card className='campusCard'>
+                    <Link to={`/campuses/${campus.id}`}><img className='campusCardImg' src={campus.imageUrl} /></Link>
+                    <Card.Body>
+                      <Card.Title>
+                        {campus.name}
+                      </Card.Title>
+                      <Card.Subtitle style={{padding:'.5rem'}}>
+                        {!enrolledStudents.length ? 'No Students Enrolled' : enrolledStudents.length === 1 ? 'Enrollement: 1 Student' : `Enrollment: ${enrolledStudents.length} Students`}
+                      </Card.Subtitle>
+                      <Card.Subtitle style={{padding:'.5rem'}}>Located at: {campus.address}</Card.Subtitle>
+                      <Button variant='primary' size='lg' onClick={(ev)=> handleDelete(ev, campus)}>Sell this Campus</Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Container>
+            </div>
           )
-        })}
-      </tbody>
+        })
     )
   }
 

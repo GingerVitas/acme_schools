@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {expelStudent} from '../store/studentStore';
 import {updateCampus, loadCampuses} from '../store/campusStore';
+import EnrolledStudentCard from './EnrolledStudentCard';
+import {Card, Container, Form, Button, Row} from 'react-bootstrap';
+
 
 
 class Campus extends React.Component{
@@ -59,31 +61,31 @@ class Campus extends React.Component{
     if(!campus) return <h2>Loading....</h2>
     return(
       <div>
-        <div>
-          <img src={campus.imageUrl} />
-          <h2>{campus.name}</h2>
-          <h3>{campus.address}</h3>
-          <p>{campus.description}</p>
-        </div>
-        <div>
+        <Container fluid>
+          <Card style={{flexDirection:'row', justifyContent:'center', textAlign:'center', flexWrap:'wrap', alignItems:'center'}}>
+            <Card.Img style={{flexBasis:'45%', padding:'1rem', objectFit:'cover'}} src={campus.imageUrl} />
+            <Form style={{flexBasis:'45%'}} onSubmit={handleSubmit}>
+              <Form.Label>Update Campus Details</Form.Label>
+              <Form.Group>
+                <Form.Control name='name' value={name} onChange={handleChange} placeholder='Name' />
+                <Form.Control name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an Image' />
+                <Form.Control name='address' value={address} onChange={handleChange} placeholder='Address' />
+                <Form.Control as='textarea' rows={5} name='description' value={description} onChange={handleChange} placeholder='Description' />
+                <Button style={{marginTop:'1rem'}} type='submit'>Update Campus</Button>
+              </Form.Group>
+            </Form>
+            <Card.Body>
+              <Card.Title style={{flexBasis:'100%'}}>{campus.name}</Card.Title>
+              <Card.Subtitle style={{flexBasis:'100%', padding:'1rem'}}>{campus.address}</Card.Subtitle>
+              <Card.Text style={{flexBasis:'100%'}}>{campus.description}</Card.Text>
+            </Card.Body> 
+          </Card>
+        </Container>
+        <div style={{textAlign:'center', marginTop:'1rem'}}>
           <h3>Enrolled Students</h3>
-          <ul>
-            {enrolledStudents.map(student => {
-              return (
-                <li key={student.id}><Link to={`/students/${student.id}`} >{student.firstName} {student.lastName}</Link> <button onClick={()=>this.props.expelStudent(student)}>Expel this student</button></li>
-                
-              )
-            })}
-          </ul>
-        </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input name='name' value={name} onChange={handleChange} placeholder='Name' />
-            <input name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an Image' />
-            <input name='address' value={address} onChange={handleChange} placeholder='Address' />
-            <textarea name='description' value={description} onChange={handleChange} placeholder='Description' />
-            <button type='submit'>Update Campus</button>
-          </form>
+          <Row xs={1} sm={1} md={2} lg={2} xl={2} xxl={2} style={{alignText:'center', margin:'1rem'}}>
+            <EnrolledStudentCard students={enrolledStudents} campus={campus} style={{margin:'1rem'}} />
+          </Row>
         </div>
       </div>
       
@@ -104,8 +106,7 @@ const mapDispatchToProps = (dispatch, {history}) => {
   return {
     loadCampuses: () => dispatch(loadCampuses()),
     updateCampus: (campus) => dispatch(updateCampus(campus)),
-    updateStudent: (student) => dispatch(updateStudent(student, history)),
-    expelStudent: (student) => dispatch(expelStudent(student))
+    updateStudent: (student) => dispatch(updateStudent(student, history))
   }
 }
 

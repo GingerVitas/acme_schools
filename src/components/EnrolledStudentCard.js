@@ -1,31 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {deleteStudent, loadStudents} from '../store/studentStore';
+import {expelStudent, loadStudents} from '../store/studentStore';
 import {Link} from 'react-router-dom';
 import {Card, Col, Button, Container} from 'react-bootstrap';
 import './customStyles.css'
 
 class StudentCard extends React.Component {
   constructor(props){
-    super(props),
-
-    this.deleteFunction = this.deleteFunction.bind(this)
+    super(props)
   }
 
-deleteFunction(student){
-    this.props.deleteStudent(student).then(() => {
-        return alert('Student removed from database!')
-      }
-    )
-  }
-  // <Link to={`/students/${student.id}`}></Link>
   render(){
-    const {students, campuses} = this.props
-    const {deleteFunction} = this;
+    const {students, campus, expelStudent} = this.props
     if(!students.length) return (<tr><td>No matching students</td></tr>)
     return(
       students.map(student => {
-        const campus = campuses.find(campus => campus.id === student.campusId);
         return (
           <div key={student.id} >
             <Container className='studentCard'>
@@ -42,8 +31,8 @@ deleteFunction(student){
                   </Card>
                 </Card>
               </Col>
-              <Button variant="primary" style={{marginTop:'.5em'}} size="lg" onClick={()=> deleteFunction(student)}>
-                      Remove from Database
+              <Button variant="primary" style={{marginTop:'.5em'}} size="lg" onClick={()=> expelStudent(student)}>
+                      Expel Student
               </Button>
             </Container>
           </div>
@@ -59,7 +48,7 @@ deleteFunction(student){
 const mapDispatchToProps = (dispatch) => {
   return {
     loadStudents: () => dispatch(loadStudents()),
-    deleteStudent: (student) => dispatch(deleteStudent(student))
+    expelStudent: (student) => dispatch(expelStudent(student))
   }
 };
 

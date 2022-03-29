@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {updateStudent, loadStudents} from '../store/studentStore';
+import {Card, Form, Container, Button, Row, Col} from 'react-bootstrap';
 
 
 class Student extends React.Component{
@@ -73,37 +74,49 @@ class Student extends React.Component{
     ) 
     }
     return(
-      <div>
-        <table>
-          <tbody>
-          <tr key={student.id}>
-              <td>
-              <img className='studentCardImg' src={student.imageUrl} />
-                <div className='studentCardName'>{student.firstName} {student.lastName}</div>
-                <Link to={!campus ? '': `/campuses/${campus.id}`}><div className='studentCardEnrollment'>{!campus ? 'Not Currently Enrolled' : `Student at ${campus.name}`}</div></Link>
-                <div className='studentCardEmail'>{student.email}</div>
-                <div className='studentGpa'>{student.gpa}</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <form onSubmit={handleSubmit}>
-          <input name='firstName' value={firstName} onChange={handleChange} />
-          <input name='lastName' value={lastName} onChange={handleChange} />
-          <input name='email' value={email} onChange={handleChange} />
-          <input name='imageUrl' value={imageUrl} onChange={handleChange} />
-          <input name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId === null ? '' : campusId} onChange={ev => this.setState({campusId:ev.target.value*1})}>
-            <option value=''>-- Select a Campus --</option>
-            {campuses.map(campus => {
-              return (
-                <option value={campus.id} key={campus.id}>{campus.name}</option>
-              )
-            })}
-          </select>
-          <button type='submit'>Update</button>
-        </form>
+      <div style={{display:'flex', marginTop:'2rem', alignItems:'center'}} key={student.id}>
+        <Container style={{flexBasis:'60%', display:'flex', justifyContent:'center', maxHeight:'20vh'}}>
+            <Card border='primary' style={{flexDirection:'row', alignItems:'center'}}>
+                <Card.Img style={{padding:'1rem', flexBasis:'30%'}} src={student.imageUrl} />
+                <Card style={{border:'none', textAlign:'center', flexBasis:'70%'}}>
+                  <Card.Body>
+                    <Card.Title>{student.firstName} {student.lastName}</Card.Title>
+                    {!campus ? <Card.Subtitle style={{paddingTop:'.5rem'}}>'Not Currently Enrolled'</Card.Subtitle> : <Card.Subtitle style={{paddingTop:'.5rem'}}>Student at <Link to={`/campuses/${campus.name}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
+                    <Card.Subtitle style={{padding:'1rem'}}>Email: {student.email}</Card.Subtitle>
+                    <Card.Subtitle>Current GPA: {student.gpa}</Card.Subtitle>
+                  </Card.Body>
+                </Card>         
+              </Card>
+        </Container>
+        <Form onSubmit={handleSubmit} style={{flexBasis:'40%', textAlign:'center', marginRight:'3rem'}}>
+          <Form.Label style={{fontSize:'25px'}}>Update Student Details</Form.Label>
+          <Form.Group>
+            <Row>
+              <Col>
+                <Form.Control name='firstName' value={firstName} onChange={handleChange} />
+              </Col>
+              <Col>
+                <Form.Control name='lastName' value={lastName} onChange={handleChange} />
+              </Col>
+            </Row>
+            <Form.Control name='email' value={email} onChange={handleChange} />
+            <Form.Control name='imageUrl' value={imageUrl} onChange={handleChange} />
+            <Form.Control name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
+            <Form.Select name='campusId' value={campusId ? campusId : ''} onChange={(ev) => this.setState({campusId:ev.target.value*1})}>
+              <option value=''>-- Select a Campus --</option>
+              {campuses.map(campus => {
+                return (
+                  <option value={campus.id*1} key={campus.id}>{campus.name}</option>
+                )
+              })}
+            </Form.Select>
+            <Button type='submit' style={{marginTop:'1rem'}}>Update</Button>
+          </Form.Group>
+
+        </Form>
       </div>
+
+
 
     )
   }
