@@ -81,7 +81,7 @@ class Student extends React.Component{
                 <Card style={{border:'none', textAlign:'center', flexBasis:'70%'}}>
                   <Card.Body>
                     <Card.Title>{student.firstName} {student.lastName}</Card.Title>
-                    {!campus ? <Card.Subtitle style={{paddingTop:'.5rem'}}>'Not Currently Enrolled'</Card.Subtitle> : <Card.Subtitle style={{paddingTop:'.5rem'}}>Student at <Link to={`/campuses/${campus.name}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
+                    {!campus ? <Card.Subtitle style={{paddingTop:'.5rem'}}>'Not Currently Enrolled'</Card.Subtitle> : <Card.Subtitle style={{paddingTop:'.5rem'}}>Student at <Link to={`/campuses/${campus.id}`} style={{textDecoration:'none', color:'inherit'}}>{campus.name}</Link></Card.Subtitle>}
                     <Card.Subtitle style={{padding:'1rem'}}>Email: {student.email}</Card.Subtitle>
                     <Card.Subtitle>Current GPA: {student.gpa}</Card.Subtitle>
                   </Card.Body>
