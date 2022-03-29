@@ -89,7 +89,7 @@ class Student extends React.Component{
               </Card>
         </Container>
         <Form onSubmit={handleSubmit} style={{flexBasis:'40%', textAlign:'center', marginRight:'3rem'}}>
-          <Form.Label style={{fontSize:'25px'}}>Update this student</Form.Label>
+          <Form.Label style={{fontSize:'25px'}}>Update Student Details</Form.Label>
           <Form.Group>
             <Row>
               <Col>
