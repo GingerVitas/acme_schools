@@ -27,13 +27,13 @@ deleteFunction(student){
         const campus = campuses.find(campus => campus.id === student.campusId);
         return (
           <Col key={student.id}>
-            <Card style={{width:'300px'}}>
-              <Card.Img src={student.imageUrl} />
+            <Card style={{maxWidth:'300px'}}>
+            <Link to={`/students/${student.id}`}><Card.Img src={student.imageUrl} /></Link>
               <Card.Body>
                 <Card.Title>{student.firstName} {student.lastName}</Card.Title>
-                <Card.Subtitle>{!campus ? 'Not Currently Enrolled' : `Student at ${campus.name}`}</Card.Subtitle>
-                <Card.Subtitle>{student.email}</Card.Subtitle>
-                <Card.Subtitle>{student.gpa}</Card.Subtitle>
+                {!campus ? <Card.Subtitle>Not Currently Enrolled</Card.Subtitle> : <Link to={`/campuses/${campus.id}`}><Card.Subtitle>Student at {campus.name}</Card.Subtitle></Link>}
+                <Card.Subtitle>Email: {student.email}</Card.Subtitle>
+                <Card.Subtitle>GPA: {student.gpa}</Card.Subtitle>
               </Card.Body>
               <div className="d-grid gap-2">
                 <Button variant="primary" size="lg" onClick={()=> deleteFunction(student)}>

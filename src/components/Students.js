@@ -109,7 +109,7 @@ class Students extends React.Component {
           </div>
           <div className='d-inline-flex'>
             <div className='studentCards'>
-              <Row xs={1} md={2}>
+              <Row xs={1} sm={2}>
                   <StudentCard students={currentStudents} campuses={campuses}/>
               </Row>
             </div>
