@@ -4,6 +4,7 @@ import CreateCampusForm from './CreateCampusForm';
 import CampusCard from './CampusCard';
 import CampusesNav from './CampusesNav';
 import CampusPagination from './CampusPagination';
+import {Row} from 'react-bootstrap';
 
 class Campuses extends React.Component {
   constructor(props){
@@ -86,11 +87,16 @@ class Campuses extends React.Component {
             <CampusesNav sortHandler={sortHandler} filterHandler={filterHandler} />
           </div>
           <div className='d-inline-flex' style={{justifyContent:'center'}}>
-            <div className='campusCards'>
-              <CampusCard campuses={currentCampuses} students={students} />
+            <div className='campusCards' style={{maxWidth:'65%'}}>
+              <Row>
+                <CampusCard campuses={currentCampuses} students={students} />
+              </Row>
+               
             </div>
             <div className='addCampusFormContainer' style={{textAlign:'center', width:'35vw'}}>
+             <br></br>
              <h3>Create a new campus!</h3>
+             <br></br>
              <CreateCampusForm />
             </div>
           </div>

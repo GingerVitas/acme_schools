@@ -38,6 +38,7 @@ class CreateCampusForm extends React.Component {
           <Form.Control name='imageUrl' type='url' value={imageUrl} onChange={handleChange} placeholder='Upload an image of campus' />
           <Form.Control name='address' value={address} onChange={handleChange} placeholder='Campus Address' required onInvalid={e => e.target.setCustomValidity('Please enter a valid address for the campus')}/>
           <Form.Control as='textarea' rows={5} name='description' value={description} onChange={handleChange} placeholder='Describe the campus' />
+          <br></br>
           <Button type='submit'>Register your new campus!</Button>
         </Form.Group>
       </Form>
