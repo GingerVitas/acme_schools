@@ -21,10 +21,10 @@ class App extends React.Component{
   render(){
     return(
       <HashRouter>
-        <Container>
+        <Container fluid>
           <header>
             <Link to='/' style={{ textDecoration: 'none', color: 'inherit', textAlign:'center' }}><h1>ACME Campus Enrollments</h1></Link>
-            <nav>
+            <nav style={{position:'sticky', top:'0'}}>
               <Route component={NavMenu}/>
             </nav>
           </header>

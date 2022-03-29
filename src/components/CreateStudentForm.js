@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {addStudent} from '../store/studentStore';
+import {Form, Button} from 'react-bootstrap';
 
 class CreateStudentForm extends Component {
   constructor(props) {
@@ -59,22 +60,24 @@ class CreateStudentForm extends Component {
 
     if(!campuses.length) return <h3>Loading....</h3>;
     return(
-      <form onSubmit={handleSubmit}>
-          <input name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
-          <input name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
-          <input name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
-          <input name='imageUrl' value={imageUrl} placeholder='Upload your picture' onChange={handleChange} />
-          <input name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
-          <select name='campusId' value={campusId} onChange={handleChange}>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className='mb-3'>
+          <Form.Control name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+          <Form.Control name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+          <Form.Control type='email' name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
+          <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Upload a picture' onChange={handleChange} />
+          <Form.Control name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
+          <Form.Select name='campusId' value={campusId} onChange={handleChange}>
             <option value=''>-- Select a Campus --</option>
             {campuses.map(campus => {
               return (
                 <option value={campus.id} key={campus.id}>{campus.name}</option>
               )
             })}
-          </select>
-          <button type='submit'>Enroll!</button>
-          </form>
+          </Form.Select>
+        </Form.Group> 
+        <Button type='submit'>Register!</Button>
+      </Form>
     )
   }
 

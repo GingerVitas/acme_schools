@@ -80,24 +80,26 @@ class Campuses extends React.Component {
 
     if(!students.length || !campuses.length) return <h3>Loading...</h3>;
     return(
-    <div className='campusesContainer'>
-      <div className='campusListContainer'>
-        <div className='campusesNav'>
-          <CampusesNav sortHandler={sortHandler} filterHandler={filterHandler} />
+    <div>
+        <div className='campusListContainer'>
+          <div className='campusesNav'>
+            <CampusesNav sortHandler={sortHandler} filterHandler={filterHandler} />
+          </div>
+          <div className='d-inline-flex' style={{justifyContent:'center'}}>
+            <div className='campusCards'>
+              <CampusCard campuses={currentCampuses} students={students} />
+            </div>
+            <div className='addCampusFormContainer' style={{textAlign:'center', width:'35vw'}}>
+             <h3>Create a new campus!</h3>
+             <CreateCampusForm />
+            </div>
+          </div>
         </div>
-        <div>
-          <table>
-            <CampusCard campuses={currentCampuses} students={students} />
-          </table>
+        <div className='campusPagination' style={{display:'flex', justifyContent:'center', marginTop:'1rem'}}>
+            <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
         </div>
-        <div>
-          <CampusPagination campusesPerPage={campusesPerPage} totalModifiedCampuses={modifiedCampuses.length} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
-        </div>
-      </div>
-      <div className='addCampusFormContainer'>
-          <CreateCampusForm />
-      </div>
     </div>
+    
   )
   }
 

@@ -26,7 +26,7 @@ deleteFunction(student){
       students.map(student => {
         const campus = campuses.find(campus => campus.id === student.campusId);
         return (
-          <Col key={student.id}>
+          <Col key={student.id} style={{maxWidth:'300px'}}>
             <Card style={{maxWidth:'300px'}}>
             <Link to={`/students/${student.id}`}><Card.Img src={student.imageUrl} /></Link>
               <Card.Body>

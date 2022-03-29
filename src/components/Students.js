@@ -114,7 +114,8 @@ class Students extends React.Component {
               </Row>
             </div>
             <div className='createStudentFormContainer'>
-                <CreateStudentForm />
+              <h3>Register a new student</h3>
+              <CreateStudentForm />
             </div>
           </div>
           <div className='studentPagination' style={{display:'flex', justifyContent:'center', marginTop:'1rem'}}>
