@@ -43,7 +43,6 @@ class CreateStudentForm extends Component {
     ev.preventDefault();
     if(this.state.imageUrl === '') {
       const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
-      console.log(newStudent)
       this.props.addStudent(newStudent);
       alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
       this.setState({
