@@ -35,7 +35,7 @@ class CreateCampusForm extends React.Component {
       <Form onSubmit={handleSubmit} style={{position:'fixed', width:'40%', right:'1vw', top:'30vh'}}>
         <Form.Label style={{fontSize:'25px'}}>Create a new Campus!</Form.Label>
         <Form.Group>
-         <FloatingLabel label='name' className='mb-3'>
+         <FloatingLabel label='Name' className='mb-3'>
             <Form.Control name='name' value={name} onChange={handleChange} placeholder='Campus Name' required onInvalid={e => e.target.setCustomValidity('Please enter a name for the campus')}/>
           </FloatingLabel>
           <FloatingLabel label='Image URL' className='mb-3'>

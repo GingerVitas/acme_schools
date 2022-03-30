@@ -92,7 +92,7 @@ class Campus extends React.Component{
             <Form style={{flexBasis:'45%', paddingTop:'1.5rem'}} onSubmit={handleSubmit}>
               <Form.Label>Update Campus Details</Form.Label>
               <Form.Group>
-                <FloatingLabel label='name' className='mb-3'>
+                <FloatingLabel label='Name' className='mb-3'>
                   <Form.Control name='name' value={name} onChange={handleChange} placeholder='Name' />
                 </FloatingLabel>
                   <FloatingLabel label='Image URL' className='mb-3'>

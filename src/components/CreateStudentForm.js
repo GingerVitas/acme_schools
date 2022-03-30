@@ -81,12 +81,12 @@ class CreateStudentForm extends Component {
             <Form.Group>
             <Row>
               <Col>
-                <FloatingLabel label="First name" className="mb-3" >
+                <FloatingLabel label="First Name" className="mb-3" >
                   <Form.Control name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
                 </FloatingLabel>
               </Col>
               <Col>
-                <FloatingLabel label="Last name" className="mb-3" >
+                <FloatingLabel label="Last Name" className="mb-3" >
                   <Form.Control name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
                 </FloatingLabel>
               </Col>
