@@ -11,10 +11,10 @@ class Campus extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      name: this.props.campus ? this.props.campus.name : '',
-      imageUrl: this.props.campus ? this.props.campus.imageUrl : '',
-      address: this.props.campus ? this.props.campus.address : '',
-      description: this.props.campus ? this.props.campus.description : '',
+        name: this.props.campus ? this.props.campus.name : '',
+        imageUrl: this.props.campus ? this.props.campus.imageUrl : '',
+        address: this.props.campus ? this.props.campus.address : '',
+        description: this.props.campus ? this.props.campus.description : '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,33 +25,19 @@ class Campus extends React.Component{
 
   handleSubmit(ev){
     ev.preventDefault();
-    if(this.state.imageUrl === '') {
-      const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
-      console.log(newStudent)
-      this.props.addStudent(newStudent);
-      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
-      this.setState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        imageUrl: '',
-        gpa: '',
-        campusId: ''
+      const updatedCampus = {...this.props.campus, ...this.state}
+      this.props.updateCampus(updatedCampus);
+      alert(`${this.state.campus.name} has been updated!`)
+      this.setState({      
+          firstName: '',
+          lastName: '',
+          email: '',
+          imageUrl: '',
+          gpa: '',
+          campusId: ''
       })
-    } else {
-      const newStudent = {...this.state}
-      this.props.addStudent(newStudent);
-      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
-      this.setState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        imageUrl: '',
-        gpa: '',
-        campusId: ''
-      })
-    }
-  }
+  };
+  
 
   handleChange(ev) {
     this.setState({
@@ -62,10 +48,10 @@ class Campus extends React.Component{
   componentDidUpdate(prevProps){
     if(!prevProps.campus && this.props.campus){
       this.setState({
-        name: this.props.campus.name,
-        imageUrl: this.props.campus.imageUrl,
-        address: this.props.campus.address,
-        description: this.props.campus.description
+          name: this.props.campus.name,
+          imageUrl: this.props.campus.imageUrl,
+          address: this.props.campus.address,
+          description: this.props.campus.description
       })
     }
   };
