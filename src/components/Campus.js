@@ -115,7 +115,7 @@ class Campus extends React.Component{
           </Card>
         </Container>
         <div style={{textAlign:'center', marginTop:'1rem'}}>
-          <h3>Enrolled Students</h3>
+          <h3>Enrolled Students ({enrolledStudents.length})</h3>
           <Row xs={1} sm={1} md={2} lg={2} xl={2} xxl={2} style={{alignText:'center', margin:'1rem'}}>
             <EnrolledStudentCard students={enrolledStudents} campus={campus} style={{margin:'1rem'}} />
           </Row>
