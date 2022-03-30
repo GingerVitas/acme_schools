@@ -18,7 +18,6 @@ deleteFunction(student){
       }
     )
   }
-  // <Link to={`/students/${student.id}`}></Link>
   render(){
     const {students, campuses} = this.props
     const {deleteFunction} = this;

@@ -24,7 +24,7 @@ class Campuses extends React.Component {
     this.setState({sortView: str})
   }
   filterHandler(str) {
-    this.setState({filterView: str})
+    this.setState({filterView: str, currentPage: 1})
   }
   setCurrentPage(page) {
     this.setState({currentPage: page});

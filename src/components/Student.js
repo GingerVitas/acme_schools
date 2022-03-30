@@ -38,32 +38,9 @@ class Student extends React.Component{
 
   handleSubmit(ev){
     ev.preventDefault();
-    if(this.state.imageUrl === '') {
-      const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
-      console.log(newStudent)
-      this.props.addStudent(newStudent);
-      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
-      this.setState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        imageUrl: '',
-        gpa: '',
-        campusId: ''
-      })
-    } else {
-      const newStudent = {...this.state}
-      this.props.addStudent(newStudent);
-      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
-      this.setState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        imageUrl: '',
-        gpa: '',
-        campusId: ''
-      })
-    }
+    const updatedStudent = {...this.props.student, ...this.state}
+    this.props.updateStudent(updatedStudent);
+    alert(`${this.state.firstName} ${this.state.lastName} has been updated!`)
   }
 
   handleGPAChange(ev){

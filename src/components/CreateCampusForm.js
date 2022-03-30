@@ -18,7 +18,31 @@ class CreateCampusForm extends React.Component {
 
   handleSubmit(ev){
     ev.preventDefault();
-    this.props.createCampus({...this.state});
+    if(this.state.imageUrl === '') {
+      const newCampus = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
+      this.props.createCampus(newCampus);
+      alert(`${this.state.name} has been created!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    } else {
+      const newCampus = {...this.state}
+      this.props.addStudent(newCampus);
+      alert(`${this.state.name} has been created!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    }
   }
 
   handleChange(ev){
