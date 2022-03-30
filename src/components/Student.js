@@ -57,7 +57,7 @@ class Student extends React.Component{
   };
 
   componentDidUpdate(prevProps){
-    if(!prevProps.student && this.props.student){
+    if(!prevProps.student && this.props.student || prevProps.student.id !== this.props.student.id ){
       this.setState({
         firstName: this.props.student.firstName,
         lastName: this.props.student.lastName,

@@ -46,7 +46,7 @@ class Campus extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    if(!prevProps.campus && this.props.campus){
+    if(!prevProps.campus && this.props.campus || prevProps.campus.id !== this.props.campus.id){
       this.setState({
           name: this.props.campus.name,
           imageUrl: this.props.campus.imageUrl,
