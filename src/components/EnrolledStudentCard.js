@@ -17,7 +17,7 @@ class StudentCard extends React.Component {
       students.map(student => {
         return (
           <div key={student.id} >
-            <Container className='studentCard'>
+            <Container className='studentCard' style={{backgroundColor:'white'}}>
               <Col style={{display:'flex', justifyContent:'center'}}>
                 <Card style={{border:'none', flexDirection:'row', minWidth:'485px', maxWidth:'485px', minHeight:'135px', maxHeight:'135px'}}>
                   <Link to={`/students/${student.id}`} style={{textDecoration:'none'}}><Card.Img src={student.imageUrl} /></Link>
