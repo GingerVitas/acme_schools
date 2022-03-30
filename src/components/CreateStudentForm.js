@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {addStudent} from '../store/studentStore';
-import {Form, Button, Row, Col, Container} from 'react-bootstrap';
+import {Form, Button, Row, Col, Container, FloatingLabel} from 'react-bootstrap';
 
 class CreateStudentForm extends Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class CreateStudentForm extends Component {
   }
 
   handleChange(ev) {
+    ev.target.setCustomValidity('');
     this.setState({
       [ev.target.name]:ev.target.value
     })
@@ -40,17 +41,33 @@ class CreateStudentForm extends Component {
 
   handleSubmit(ev){
     ev.preventDefault();
-    const newStudent = {...this.state}
-    this.props.addStudent(newStudent);
-    alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
-    this.setState({
-      firstName: '',
-      lastName: '',
-      email: '',
-      imageUrl: '',
-      gpa: '',
-      campusId: ''
-    })
+    if(this.state.imageUrl === '') {
+      const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
+      console.log(newStudent)
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    } else {
+      const newStudent = {...this.state}
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    }
+
   }
 
   render(){
@@ -65,31 +82,43 @@ class CreateStudentForm extends Component {
             <Form.Group>
             <Row>
               <Col>
-                <Form.Control name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+                <FloatingLabel label="First name" className="mb-3" >
+                  <Form.Control name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+                </FloatingLabel>
               </Col>
               <Col>
-                <Form.Control name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+                <FloatingLabel label="Last name" className="mb-3" >
+                  <Form.Control name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+                </FloatingLabel>
               </Col>
               <Col>
-                <Form.Control type='email' name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
+                <FloatingLabel label="Email Address" className="mb-3" >
+                  <Form.Control type='email' name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
+                </FloatingLabel>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Link your picture here' onChange={handleChange} />
+                <FloatingLabel label="Image URL" className="mb-3" >
+                  <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Link your picture here' onChange={handleChange} />
+                </FloatingLabel>
               </Col>
               <Col>
-                <Form.Control name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
+                <FloatingLabel label="GPA" className="mb-3" >
+                  <Form.Control name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
+                </FloatingLabel>
               </Col>
               <Col>
-                <Form.Select name='campusId' value={campusId} onChange={handleChange}>
-                  <option value=''>-- Select a Campus --</option>
-                  {campuses.map(campus => {
-                    return (
-                      <option value={campus.id} key={campus.id}>{campus.name}</option>
-                    )
-                  })}
-                </Form.Select>
+                <FloatingLabel label="Campus" className="mb-3" >
+                  <Form.Select name='campusId' value={campusId} required onInvalid={e => e.target.setCustomValidity('Please select a campus')} onChange={handleChange}>
+                    <option value=''>-- Select a Campus --</option>
+                    {campuses.map(campus => {
+                      return (
+                        <option value={campus.id} key={campus.id}>{campus.name}</option>
+                      )
+                    })}
+                  </Form.Select>
+                </FloatingLabel>
               </Col>
             </Row>
           </Form.Group> 

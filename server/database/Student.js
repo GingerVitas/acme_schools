@@ -25,7 +25,8 @@ const Student = db.define('student', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://www.seekpng.com/png/detail/402-4022635_avatar-generic-person-icon.png',
   },
   gpa: {
     type: Sequelize.DECIMAL(10,2),

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {updateCampus, loadCampuses} from '../store/campusStore';
 import EnrolledStudentCard from './EnrolledStudentCard';
-import {Card, Container, Form, Button, Row} from 'react-bootstrap';
+import {Card, Container, Form, Button, Row, FloatingLabel} from 'react-bootstrap';
 
 
 
@@ -67,10 +67,18 @@ class Campus extends React.Component{
             <Form style={{flexBasis:'45%'}} onSubmit={handleSubmit}>
               <Form.Label>Update Campus Details</Form.Label>
               <Form.Group>
-                <Form.Control name='name' value={name} onChange={handleChange} placeholder='Name' />
-                <Form.Control name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Upload an Image' />
-                <Form.Control name='address' value={address} onChange={handleChange} placeholder='Address' />
-                <Form.Control as='textarea' rows={5} name='description' value={description} onChange={handleChange} placeholder='Description' />
+                <FloatingLabel label='name' className='mb-3'>
+                  <Form.Control name='name' value={name} onChange={handleChange} placeholder='Name' />
+                </FloatingLabel>
+                  <FloatingLabel label='Image URL' className='mb-3'>
+                <Form.Control name='imageUrl' value={imageUrl} onChange={handleChange} placeholder='Image URL' />
+                </FloatingLabel>
+                <FloatingLabel label='Address' className='mb-3'>
+                  <Form.Control name='address' value={address} onChange={handleChange} placeholder='Address' />
+                </FloatingLabel>
+                <FloatingLabel label='Description' className='mb-3'>
+                 <Form.Control as='textarea' height={'100px'} name='description' value={description} onChange={handleChange} placeholder='Description' />
+                </FloatingLabel>
                 <Button style={{marginTop:'1rem'}} type='submit'>Update Campus</Button>
               </Form.Group>
             </Form>
