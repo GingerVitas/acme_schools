@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {updateStudent, loadStudents} from '../store/studentStore';
-import {Card, Form, Container, Button, Row, Col} from 'react-bootstrap';
+import {Card, Form, Container, Button, Row, Col, FloatingLabel} from 'react-bootstrap';
 
 
 class Student extends React.Component{
@@ -38,9 +38,33 @@ class Student extends React.Component{
 
   handleSubmit(ev){
     ev.preventDefault();
-    const student = {...this.props.student, ...this.state};
-    this.props.updateStudent(student);
-  };
+    if(this.state.imageUrl === '') {
+      const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
+      console.log(newStudent)
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    } else {
+      const newStudent = {...this.state}
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    }
+  }
 
   handleGPAChange(ev){
     if (ev.target.value.length > 4) {
@@ -98,28 +122,40 @@ class Student extends React.Component{
               </Card>
         </Container>
         <Form onSubmit={handleSubmit} style={{flexBasis:'40%', textAlign:'center', marginRight:'3rem'}}>
-          <Form.Label style={{fontSize:'25px'}}>Update Student Details</Form.Label>
+          <Form.Label style={{fontSize:'20px'}}>Update Student Details</Form.Label>
           <Form.Group>
             <Row>
               <Col>
-                <Form.Control name='firstName' value={firstName} onChange={handleChange} />
+                <FloatingLabel label="First name" className="mb-3" >
+                  <Form.Control name='firstName' value={firstName} placeholder='First Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a first name')}/>
+                </FloatingLabel>
               </Col>
               <Col>
-                <Form.Control name='lastName' value={lastName} onChange={handleChange} />
+                <FloatingLabel label="Last name" className="mb-3" >
+                  <Form.Control name='lastName' value={lastName} placeholder='Last  Name' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a last name')}/>
+                </FloatingLabel>
               </Col>
             </Row>
-            <Form.Control name='email' value={email} onChange={handleChange} />
-            <Form.Control name='imageUrl' value={imageUrl} onChange={handleChange} />
-            <Form.Control name='gpa' value={gpa} type='number' max='4' onChange={handleGPAChange} />
-            <Form.Select name='campusId' required onInvalid={e => e.target.setCustomValidity('Please select a campus')} value={campusId ? campusId : ''} onChange={handleSelect}>
-              <option value=''>-- Select a Campus --</option>
-              {campuses.map(campus => {
-                return (
-                  <option value={campus.id*1} key={campus.id}>{campus.name}</option>
-                )
-              })}
-            </Form.Select>
-            <Button type='submit' style={{marginTop:'1rem'}}>Update</Button>
+            <FloatingLabel label="Email Address" className="mb-3" >
+              <Form.Control type='email' name='email' value={email} placeholder='Enter your email' onChange={handleChange} required onInvalid={e => e.target.setCustomValidity('Please enter a valid email address')}/>
+            </FloatingLabel>
+            <FloatingLabel label="Image URL" className="mb-3" >
+              <Form.Control type='url' name='imageUrl' value={imageUrl} placeholder='Link your picture here' onChange={handleChange} />
+            </FloatingLabel>
+            <FloatingLabel label="GPA" className="mb-3" >
+              <Form.Control name='gpa' type='number' value={gpa ? gpa : ''} placeholder='Enter your GPA' max='4' onChange={handleGPAChange} />
+            </FloatingLabel>
+            <FloatingLabel label="Campus" className="mb-3" >
+              <Form.Select name='campusId' required onInvalid={e => e.target.setCustomValidity('Please select a campus')} value={campusId ? campusId : ''} onChange={handleSelect}>
+                <option value=''>-- Select a Campus --</option>
+                {campuses.map(campus => {
+                  return (
+                    <option value={campus.id*1} key={campus.id}>{campus.name}</option>
+                  )
+                })}
+              </Form.Select>
+            </FloatingLabel>
+            <Button type='submit' style={{marginTop:'.5rem'}}>Update</Button>
           </Form.Group>
 
         </Form>

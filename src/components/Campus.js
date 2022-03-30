@@ -23,9 +23,34 @@ class Campus extends React.Component{
     await this.props.loadCampuses();
   }
 
-  handleSubmit(ev) {
+  handleSubmit(ev){
     ev.preventDefault();
-    this.props.updateCampus({...this.props.campus, ...this.state})
+    if(this.state.imageUrl === '') {
+      const newStudent = Object.fromEntries(Object.entries({...this.state}).filter(([key, value]) => key !== 'imageUrl'));
+      console.log(newStudent)
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    } else {
+      const newStudent = {...this.state}
+      this.props.addStudent(newStudent);
+      alert(`${this.state.firstName} ${this.state.lastName} has been enrolled!`)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        imageUrl: '',
+        gpa: '',
+        campusId: ''
+      })
+    }
   }
 
   handleChange(ev) {
@@ -64,7 +89,7 @@ class Campus extends React.Component{
         <Container fluid>
           <Card style={{flexDirection:'row', justifyContent:'center', textAlign:'center', flexWrap:'wrap', alignItems:'center'}}>
             <Card.Img style={{flexBasis:'45%', padding:'1rem', objectFit:'cover'}} src={campus.imageUrl} />
-            <Form style={{flexBasis:'45%'}} onSubmit={handleSubmit}>
+            <Form style={{flexBasis:'45%', paddingTop:'1.5rem'}} onSubmit={handleSubmit}>
               <Form.Label>Update Campus Details</Form.Label>
               <Form.Group>
                 <FloatingLabel label='name' className='mb-3'>
@@ -77,7 +102,7 @@ class Campus extends React.Component{
                   <Form.Control name='address' value={address} onChange={handleChange} placeholder='Address' />
                 </FloatingLabel>
                 <FloatingLabel label='Description' className='mb-3'>
-                 <Form.Control as='textarea' height={'100px'} name='description' value={description} onChange={handleChange} placeholder='Description' />
+                 <Form.Control as='textarea' style={{height:'280px'}} name='description' value={description} onChange={handleChange} placeholder='Description' />
                 </FloatingLabel>
                 <Button style={{marginTop:'1rem'}} type='submit'>Update Campus</Button>
               </Form.Group>

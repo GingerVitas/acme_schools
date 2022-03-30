@@ -12,7 +12,7 @@ class StudentCard extends React.Component {
 
   render(){
     const {students, campus, expelStudent} = this.props
-    if(!students.length) return (<tr><td>No matching students</td></tr>)
+    if(!students.length) return (<h2 style={{textAlign:'center'}}>No matching students!</h2>)
     return(
       students.map(student => {
         return (

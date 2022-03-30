@@ -22,7 +22,7 @@ deleteFunction(student){
   render(){
     const {students, campuses} = this.props
     const {deleteFunction} = this;
-    if(!students.length) return (<tr><td>No matching students</td></tr>)
+    if(!students.length) return (<h2 style={{textAlign:'center'}}>No matching students!</h2>)
     return(
       students.map(student => {
         const campus = campuses.find(campus => campus.id === student.campusId);

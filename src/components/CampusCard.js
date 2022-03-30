@@ -22,7 +22,7 @@ class CampusCard extends React.Component {
   render() {
     const {campuses, students} = this.props;
     const {handleDelete} = this;
-
+    if(!campuses.length) return (<h2 style={{textAlign:'center'}}>All campuses have students enrolled!</h2>)
     return(
         campuses.map(campus => {
           const enrolledStudents = students.filter(student => student.campusId === campus.id);

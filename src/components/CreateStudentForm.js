@@ -67,7 +67,6 @@ class CreateStudentForm extends Component {
         campusId: ''
       })
     }
-
   }
 
   render(){
