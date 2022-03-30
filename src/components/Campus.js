@@ -27,7 +27,7 @@ class Campus extends React.Component{
     ev.preventDefault();
       const updatedCampus = {...this.props.campus, ...this.state}
       this.props.updateCampus(updatedCampus);
-      alert(`${this.state.campus.name} has been updated!`)
+      alert(`${this.state.name} has been updated!`)
       this.setState({      
           firstName: '',
           lastName: '',
